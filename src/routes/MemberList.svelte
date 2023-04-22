@@ -28,6 +28,13 @@
 	}
 	$: onFocusOrHoverChange([focused, hovered]);
 
+	function onTitleChange(title: string) {
+		dimension.update(({ title: _, ...rest }) => ({
+			title,
+			...rest,
+		}));
+	}
+
 	function onSelect(name: AllS) {
 		dimension.update(({ members, ...rest }) => ({
 			members: toggle(members, name),
@@ -69,7 +76,13 @@
 <section>
 	{#if titleEditable}
 		<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-		<h3 contenteditable="true" bind:textContent={title} {placeholder} tabindex={baseTabIndex}>
+		<h3
+			contenteditable="true"
+			bind:textContent={title}
+			{placeholder}
+			tabindex={baseTabIndex}
+			on:input={(e) => onTitleChange(e.currentTarget?.textContent ?? '')}
+		>
 			{title}
 		</h3>
 	{:else}

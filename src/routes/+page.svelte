@@ -31,7 +31,7 @@
 		baseTabIndex={0}
 	/>
 	<MemberList
-		title=""
+		title={$dimension.title}
 		titleEditable={true}
 		placeholder="Your unnamed Dimension — click here to edit"
 		members={$dimension.members}
