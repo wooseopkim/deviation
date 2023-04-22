@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { allS, type AllS } from '../triples/members';
+	import { allS } from '../triples/members';
 	import MemberList from './MemberList.svelte';
-	import dimension from '../store/dimension';
-	import registerQuery from '../store/plugins/query';
+	import dimension from './dimension';
+	import registerQuery from '../store/query';
 	import encodeShareCode from '../share-code/encode';
 	import decodeShareCode from '../share-code/decode';
 
@@ -10,34 +10,16 @@
 		encode: encodeShareCode,
 		decode: decodeShareCode,
 	});
-
-	let focus: AllS | undefined;
-	function onFocus(name: AllS) {
-		focus = name;
-	}
-	function onFocusOut() {
-		focus = undefined;
-	}
 </script>
 
 <h1>Deviation</h1>
 <main>
-	<MemberList
-		title="All members"
-		members={allS}
-		on:focus={(e) => onFocus(e.detail)}
-		on:blur={() => onFocusOut()}
-		{focus}
-		baseTabIndex={0}
-	/>
+	<MemberList title="All members" members={allS} baseTabIndex={0} />
 	<MemberList
 		title={$dimension.title}
 		titleEditable={true}
 		placeholder="Your unnamed Dimension — click here to edit"
 		members={$dimension.members}
-		on:focus={(e) => onFocus(e.detail)}
-		on:blur={() => onFocusOut()}
-		{focus}
 		baseTabIndex={100}
 	/>
 </main>

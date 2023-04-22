@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
+	import focus from './focus';
 	import type { AllS } from '../triples/members';
-	import dimension from '../store/dimension';
+	import dimension from './dimension';
 	import MemberCard from './MemberCard.svelte';
 	import ListItem from './ListItem.svelte';
 
@@ -10,13 +10,7 @@
 	export let placeholder: string = '';
 
 	export let members: readonly AllS[];
-	export let focus: AllS | undefined;
 	export let baseTabIndex = 0;
-
-	const dispatch = createEventDispatcher<{
-		focus: AllS;
-		blur: undefined;
-	}>();
 
 	let focused: number | undefined;
 	let hovered: number | undefined;
@@ -52,17 +46,17 @@
 
 	function onFocusOrHoverChange(_deps: unknown[]) {
 		if (focused !== undefined) {
-			dispatch('focus', members[focused]);
+			focus.set(members[focused]);
 			return;
 		}
 		if (hovered !== undefined) {
-			dispatch('focus', members[hovered]);
+			focus.set(members[hovered]);
 			return;
 		}
-		dispatch('blur');
+		focus.set(undefined);
 	}
 
-	function getStatus(id: AllS, _deps: unknown[]) {
+	function getStatus(id: AllS, focus: AllS | undefined) {
 		if (focus === undefined) {
 			return 'normal';
 		}
@@ -92,7 +86,7 @@
 		{#each members as name, index}
 			<ListItem
 				tabIndex={baseTabIndex + index + 1}
-				className={getStatus(name, [focus])}
+				className={getStatus(name, $focus)}
 				on:focus={(e) => onFocus(index, e.detail)}
 				on:hover={(e) => onHover(index, e.detail)}
 				on:select={() => onSelect(name)}
