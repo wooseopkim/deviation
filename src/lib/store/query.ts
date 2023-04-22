@@ -32,7 +32,7 @@ export default function registerQuery<T, K extends string = string>(
 	const query = url.searchParams;
 	const param = query.get(key) ?? '';
 	const value = transformer?.decode?.(param);
-	if (value !== undefined) {
+	if (query.has(key) && value !== undefined) {
 		variable.set(value);
 	}
 

@@ -5,7 +5,9 @@
 	import encodeShareCode from '$lib/share-code/encode';
 	import decodeShareCode from '$lib/share-code/decode';
 	import registerQuery from '$lib/store/query';
+	import registerLocalStorage from '$lib/store/local-storage';
 
+	registerLocalStorage(dimension, 'dimension');
 	registerQuery(dimension, 'dimension', {
 		encode: encodeShareCode,
 		decode: decodeShareCode,
