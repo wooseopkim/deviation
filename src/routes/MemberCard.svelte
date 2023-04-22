@@ -26,7 +26,7 @@
 	figure {
 		margin: 0;
 		padding-inline-end: 0.6vi;
-		padding-bottom: 0.6vb;
+		padding-bottom: 0.2vi;
 		cursor: pointer;
 	}
 

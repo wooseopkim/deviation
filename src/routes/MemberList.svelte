@@ -102,10 +102,6 @@
 		--title-max-width: 80%;
 	}
 
-	section {
-		height: 100%;
-	}
-
 	h3 {
 		max-width: var(--title-max-width);
 		--padding-horizontal: 0.25em;

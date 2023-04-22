@@ -96,4 +96,10 @@
 			overflow-y: inherit;
 		}
 	}
+
+	@media (max-width: 768px) {
+		main {
+			--card-width: 40vi;
+		}
+	}
 </style>
