@@ -4,24 +4,17 @@ import type { Page } from '@sveltejs/kit';
 import { onDestroy } from 'svelte';
 import { derived, get, type Writable } from 'svelte/store';
 
-export function registerQuery<V extends Writable<string>, K extends string = string>(
-	variable: V,
-	key: K
-): void;
-export function registerQuery<
-	T extends object,
-	V extends Writable<string>,
-	K extends string = string
->(
-	variable: V,
+export function registerQuery<K extends string = string>(variable: Writable<string>, key: K): void;
+export function registerQuery<T extends object, K extends string>(
+	variable: Writable<T>,
 	key: K,
 	transformer: {
 		encode: (value: T) => string;
 		decode: (value: string) => T;
 	}
 ): void;
-export default function registerQuery<T, V extends Writable<T>, K extends string>(
-	variable: V,
+export default function registerQuery<T, K extends string = string>(
+	variable: Writable<T>,
 	key: K,
 	transformer: {
 		encode: (value: T) => string;

@@ -1,13 +1,12 @@
 <script lang="ts">
 	import { allS, type AllS } from '../triples/members';
 	import MemberList from './MemberList.svelte';
-	import { title as dimensionTitle, members as dimensionMembers } from '../store/dimension';
+	import dimension from '../store/dimension';
 	import registerQuery from '../store/plugins/query';
 	import encodeShareCode from '../share-code/encode';
 	import decodeShareCode from '../share-code/decode';
 
-	registerQuery(dimensionTitle, 'title');
-	registerQuery(dimensionMembers, 'dimension', {
+	registerQuery(dimension, 'dimension', {
 		encode: encodeShareCode,
 		decode: decodeShareCode,
 	});
@@ -35,7 +34,7 @@
 		title=""
 		titleEditable={true}
 		placeholder="Your unnamed Dimension — click here to edit"
-		members={$dimensionMembers}
+		members={$dimension.members}
 		on:focus={(e) => onFocus(e.detail)}
 		on:blur={() => onFocusOut()}
 		{focus}

@@ -1,12 +1,15 @@
-import { allS, type AllS } from '../triples/members';
+import { allS } from '../triples/members';
+import type { Dimension } from './data';
 
-export default function encodeShareCode(dimension: AllS[]) {
-	if (dimension.length === 0) {
+const version = 1;
+
+export default function encodeShareCode({ title, members }: Dimension) {
+	if (title.length === 0 && members.length === 0) {
 		return '';
 	}
-	const indices = dimension.map((name) => allS.indexOf(name));
+	const indices = members.map((name) => allS.indexOf(name));
 	const ordered = indices.map((index) => String.fromCharCode(index + 'A'.charCodeAt(0)));
 	const sorted = indices.map((index) => String.fromCharCode(index + 'a'.charCodeAt(0))).sort();
-	const code = [ordered, sorted].map((x) => x.join('')).join('/');
+	const code = [version, title, ...[ordered, sorted].map((x) => x.join(''))].join('/');
 	return window.btoa(code);
 }
