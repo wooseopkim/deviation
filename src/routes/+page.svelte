@@ -1,8 +1,16 @@
 <script lang="ts">
 	import { allS, type AllS } from '../triples/members';
 	import MemberList from './MemberList.svelte';
+	import { title as dimensionTitle, members as dimensionMembers } from '../store/dimension';
+	import registerQuery from '../store/plugins/query';
+	import encodeShareCode from '../share-code/encode';
+	import decodeShareCode from '../share-code/decode';
 
-	let dimension: AllS[] = [];
+	registerQuery(dimensionTitle, 'title');
+	registerQuery(dimensionMembers, 'dimension', {
+		encode: encodeShareCode,
+		decode: decodeShareCode,
+	});
 
 	let focus: AllS | undefined;
 	function onFocus(name: AllS) {
@@ -10,15 +18,6 @@
 	}
 	function onFocusOut() {
 		focus = undefined;
-	}
-
-	function onSelect(name: AllS) {
-		if (dimension.includes(name)) {
-			const index = dimension.indexOf(name);
-			dimension = [...dimension.slice(0, index), ...dimension.slice(index + 1)];
-			return;
-		}
-		dimension = [...dimension, name];
 	}
 </script>
 
@@ -30,18 +29,16 @@
 		on:focus={(e) => onFocus(e.detail)}
 		on:blur={() => onFocusOut()}
 		{focus}
-		on:select={(e) => onSelect(e.detail)}
 		baseTabIndex={0}
 	/>
 	<MemberList
 		title=""
 		titleEditable={true}
 		placeholder="Your unnamed Dimension — click here to edit"
-		members={dimension}
+		members={$dimensionMembers}
 		on:focus={(e) => onFocus(e.detail)}
 		on:blur={() => onFocusOut()}
 		{focus}
-		on:select={(e) => onSelect(e.detail)}
 		baseTabIndex={100}
 	/>
 </main>

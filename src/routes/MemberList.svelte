@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 	import type { AllS } from '../triples/members';
+	import { members as dimensionMembers } from '../store/dimension';
 	import MemberCard from './MemberCard.svelte';
 	import ListItem from './ListItem.svelte';
 
@@ -15,7 +16,6 @@
 	const dispatch = createEventDispatcher<{
 		focus: AllS;
 		blur: undefined;
-		select: AllS;
 	}>();
 
 	let focused: number | undefined;
@@ -28,8 +28,14 @@
 	}
 	$: onFocusOrHoverChange([focused, hovered]);
 
-	function onSelect(id: AllS) {
-		dispatch('select', id);
+	function onSelect(name: AllS) {
+		dimensionMembers.update((members) => {
+			if (members.includes(name)) {
+				const index = members.indexOf(name);
+				return [...members.slice(0, index), ...members.slice(index + 1)];
+			}
+			return [...members, name];
+		});
 	}
 
 	function onFocusOrHoverChange(_deps: unknown[]) {
