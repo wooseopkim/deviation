@@ -10,7 +10,6 @@
 	export let placeholder: string = '';
 
 	export let members: readonly AllS[];
-	export let baseTabIndex = 0;
 
 	let focused: number | undefined;
 	let hovered: number | undefined;
@@ -74,7 +73,6 @@
 			contenteditable="true"
 			bind:textContent={title}
 			{placeholder}
-			tabindex={baseTabIndex}
 			on:input={(e) => onTitleChange(e.currentTarget?.textContent ?? '')}
 		>
 			{title}
@@ -85,7 +83,6 @@
 	<form>
 		{#each members as name, index}
 			<ListItem
-				tabIndex={baseTabIndex + index + 1}
 				className={getStatus(name, $focus)}
 				on:focus={(e) => onFocus(index, e.detail)}
 				on:hover={(e) => onHover(index, e.detail)}

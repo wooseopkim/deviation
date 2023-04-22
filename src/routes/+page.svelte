@@ -16,13 +16,12 @@
 
 <h1><super>https://</super><span><strong>deviation</strong><span>.by.wooseop.kim</span></h1>
 <main>
-	<MemberList title="All members" members={allS} baseTabIndex={0} />
+	<MemberList title="All members" members={allS} />
 	<MemberList
 		title={$dimension.title}
 		titleEditable={true}
 		placeholder="Your unnamed Dimension — click here to edit"
 		members={$dimension.members}
-		baseTabIndex={100}
 	/>
 </main>
 

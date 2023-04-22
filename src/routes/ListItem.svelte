@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 
-	export let tabIndex: number | undefined;
 	export let className: string | undefined;
 
 	const dispatchFocus = createEventDispatcher<{
@@ -28,7 +27,6 @@
 </script>
 
 <button
-	tabindex={tabIndex}
 	class={className}
 	on:focus={onFocus}
 	on:blur={onBlur}
