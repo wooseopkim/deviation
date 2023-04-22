@@ -14,7 +14,7 @@
 	});
 </script>
 
-<h1>Deviation</h1>
+<h1><super>https://</super><span><strong>deviation</strong><span>.by.wooseop.kim</span></h1>
 <main>
 	<MemberList title="All members" members={allS} baseTabIndex={0} />
 	<MemberList
@@ -32,11 +32,33 @@
 	}
 
 	h1 {
-		text-transform: uppercase;
-		font-size: 16vmin;
 		user-select: none;
 		margin: 0;
 		position: fixed;
+		display: flex;
+		flex-direction: column;
+		--non-title-margin-start: 0.5vmin;
+		--title-margin-start: -0.03em;
+	}
+
+	h1 super {
+		margin-inline-start: var(--non-title-margin-start);
+	}
+
+	h1 strong {
+		text-transform: uppercase;
+		font-size: 16vmin;
+		line-height: 0.6em;
+		margin-inline-start: var(--title-margin-start);
+	}
+
+	@media (max-width: 1680px) {
+		h1 span span {
+			display: flex;
+			flex-direction: column;
+			margin-inline-start: var(--non-title-margin-start);
+			line-height: 0.3em;
+		}
 	}
 
 	main {
@@ -44,6 +66,7 @@
 		flex-direction: row;
 		--padding-top: 16vmin;
 		padding-top: var(--padding-top);
+		margin-inline-start: 0.4rem;
 		height: calc(100vh - var(--padding-top));
 		--card-width: 10vi;
 	}
@@ -64,7 +87,7 @@
 
 		main {
 			flex-direction: column;
-			--padding-top: 0;
+			--padding-top: 2rem;
 			--card-width: 20vi;
 		}
 
