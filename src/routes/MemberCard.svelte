@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { members, type AllS, type Member } from '../triples/members';
-	import { getThumbnail, getVideoId } from '../triples/thumbnail';
+	import { members, type AllS, type Member } from '$lib/triples/members';
+	import { getThumbnail, getVideoId } from '$lib/triples/thumbnail';
 
 	export let name: AllS;
 	let member: Member;

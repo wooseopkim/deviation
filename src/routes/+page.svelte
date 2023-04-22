@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { allS } from '../triples/members';
+	import { allS } from '$lib/triples/members';
 	import MemberList from './MemberList.svelte';
 	import dimension from './dimension';
-	import registerQuery from '../store/query';
-	import encodeShareCode from '../share-code/encode';
-	import decodeShareCode from '../share-code/decode';
+	import encodeShareCode from '$lib/share-code/encode';
+	import decodeShareCode from '$lib/share-code/decode';
+	import registerQuery from '$lib/store/query';
 
 	registerQuery(dimension, 'dimension', {
 		encode: encodeShareCode,

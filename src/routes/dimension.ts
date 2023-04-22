@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store';
-import type { AllS } from '../triples/members';
+import type { AllS } from '$lib/triples/members';
 
 export default writable({
 	title: '',

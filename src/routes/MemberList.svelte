@@ -1,6 +1,6 @@
 <script lang="ts">
 	import focus from './focus';
-	import type { AllS } from '../triples/members';
+	import type { AllS } from '$lib/triples/members';
 	import dimension from './dimension';
 	import MemberCard from './MemberCard.svelte';
 	import ListItem from './ListItem.svelte';
