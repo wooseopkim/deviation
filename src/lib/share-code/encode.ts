@@ -11,5 +11,5 @@ export default function encodeShareCode({ title, members }: Dimension) {
 	const ordered = indices.map((index) => String.fromCharCode(index + 'A'.charCodeAt(0)));
 	const sorted = indices.map((index) => String.fromCharCode(index + 'a'.charCodeAt(0))).sort();
 	const code = [version, title, ...[ordered, sorted].map((x) => x.join(''))].join('/');
-	return window.btoa(code);
+	return window.btoa(encodeURIComponent(code));
 }
