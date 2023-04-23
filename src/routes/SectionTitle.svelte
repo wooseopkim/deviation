@@ -1,0 +1,52 @@
+<script lang="ts">
+	import dimension from './dimension';
+
+	let title: string;
+	export let editable: boolean = false;
+	export let placeholder: string = '';
+
+	function onTitleChange(title: string) {
+		dimension.update(({ title: _, ...rest }) => ({
+			title,
+			...rest,
+		}));
+	}
+</script>
+
+{#if editable}
+	<h3
+		contenteditable="true"
+		bind:textContent={title}
+		{placeholder}
+		on:input={(e) => onTitleChange(e.currentTarget?.textContent ?? '')}
+	>
+		<slot />
+	</h3>
+{:else}
+	<h3><slot /></h3>
+{/if}
+
+<style>
+	:root {
+		--title-max-width: 80%;
+	}
+
+	h3 {
+		max-width: var(--title-max-width);
+		--padding-horizontal: 0.25em;
+		--padding-vertical: 1em;
+		padding-block-start: var(--padding-vertical);
+		padding-block-end: var(--padding-vertical);
+		padding-inline-start: var(--padding-horizontal);
+		padding-inline-end: var(--padding-horizontal);
+		margin: 0;
+	}
+
+	h3[contenteditable='true']:not(:focus):not(:hover):empty::before {
+		max-width: var(--title-max-width);
+		content: attr(placeholder);
+		opacity: 0.3;
+		font-style: italic;
+		user-select: none;
+	}
+</style>

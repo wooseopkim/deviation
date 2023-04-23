@@ -6,6 +6,8 @@
 	import decodeShareCode from '$lib/share-code/decode';
 	import registerQuery from '$lib/store/query';
 	import registerLocalStorage from '$lib/store/local-storage';
+	import SectionTitle from './SectionTitle.svelte';
+	import ImageGrid from './ImageGrid.svelte';
 
 	registerLocalStorage(dimension, 'dimension');
 	registerQuery(dimension, 'dimension', {
@@ -14,15 +16,28 @@
 	});
 </script>
 
-<h1><super>https://</super><span><strong>deviation</strong><span>.by.wooseop.kim</span></h1>
+<h1><super>https://</super><span><strong>deviation</strong><span>.by.wooseop.kim</span></span></h1>
 <main>
-	<MemberList title="All members" members={allS} />
-	<MemberList
-		title={$dimension.title}
-		titleEditable={true}
-		placeholder="Your unnamed Dimension — click here to edit"
-		members={$dimension.members}
-	/>
+	<section>
+		<MemberList members={allS}>
+			<SectionTitle slot="title">All members</SectionTitle>
+		</MemberList>
+	</section>
+	<section>
+		<MemberList members={$dimension.members}>
+			<SectionTitle
+				editable={true}
+				placeholder="Your unnamed Dimension — click here to edit"
+				slot="title"
+			>
+				{$dimension.title}
+			</SectionTitle>
+		</MemberList>
+		{#if $dimension.members.length > 0}
+			<SectionTitle>Image</SectionTitle>
+			<ImageGrid title={$dimension.title} members={$dimension.members} />
+		{/if}
+	</section>
 </main>
 
 <style>
@@ -38,6 +53,9 @@
 		flex-direction: column;
 		--non-title-margin-start: 0.5vmin;
 		--title-margin-start: -0.03em;
+		width: 100%;
+		overflow-x: scroll;
+		overflow-y: hidden;
 	}
 
 	h1 super {
@@ -52,6 +70,10 @@
 	}
 
 	@media (max-width: 1680px) {
+		h1 {
+			overflow-x: hidden;
+		}
+
 		h1 span span {
 			display: flex;
 			flex-direction: column;
@@ -72,7 +94,7 @@
 
 	main > :global(*) {
 		width: 50%;
-		overflow-y: auto;
+		overflow-y: scroll;
 	}
 
 	@media (max-width: 1680px) {

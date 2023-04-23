@@ -9,9 +9,9 @@ export default function registerLocalStorage<T, K extends string = string>(
 		return;
 	}
 
-	const stored = localStorage.getItem(key);
-	if (stored !== null) {
-		variable.set(JSON.parse(stored));
+	const value = localStorage.getItem(key);
+	if (value !== null) {
+		variable.set(JSON.parse(value));
 	}
 
 	const unsubscribe = variable.subscribe((value) => {
