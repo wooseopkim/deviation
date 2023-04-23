@@ -1,3 +1,4 @@
+import { browser } from '$app/environment';
 import { goto } from '$app/navigation';
 import { page } from '$app/stores';
 import type { Page } from '@sveltejs/kit';
@@ -24,7 +25,7 @@ export default function registerQuery<T, K extends string = string>(
 		decode: (x) => x as unknown as T,
 	}
 ) {
-	if (typeof window === 'undefined') {
+	if (!browser) {
 		return;
 	}
 

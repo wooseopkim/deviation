@@ -1,3 +1,4 @@
+import { browser } from '$app/environment';
 import { onDestroy } from 'svelte';
 import type { Writable } from 'svelte/store';
 
@@ -5,7 +6,7 @@ export default function registerLocalStorage<T, K extends string = string>(
 	variable: Writable<T>,
 	key: K
 ) {
-	if (typeof window === 'undefined') {
+	if (!browser) {
 		return;
 	}
 
