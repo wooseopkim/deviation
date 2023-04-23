@@ -1,11 +1,11 @@
 <script lang="ts">
 	import focus from './focus';
-	import type { AllS } from '$lib/triples/members';
-	import dimension from './dimension';
+	import palette from './palette';
 	import MemberCard from './MemberCard.svelte';
 	import ListItem from './ListItem.svelte';
+	import { equalsMemberPath, type MemberPath } from '$lib/groups/MemberPath';
 
-	export let members: readonly AllS[];
+	export let members: readonly MemberPath[];
 
 	let focused: number | undefined;
 	let hovered: number | undefined;
@@ -17,19 +17,19 @@
 	}
 	$: onFocusOrHoverChange([focused, hovered]);
 
-	function onSelect(name: AllS) {
-		dimension.update(({ members, ...rest }) => ({
-			members: toggle(members, name),
+	function onSelect(id: MemberPath) {
+		palette.update(({ members, ...rest }) => ({
+			members: toggle(members, id),
 			...rest,
 		}));
 	}
 
-	function toggle(list: AllS[], name: AllS) {
-		if (list.includes(name)) {
-			const index = list.indexOf(name);
+	function toggle(list: MemberPath[], id: MemberPath) {
+		if (list.includes(id)) {
+			const index = list.indexOf(id);
 			return [...list.slice(0, index), ...list.slice(index + 1)];
 		}
-		return [...list, name];
+		return [...list, id];
 	}
 
 	function onFocusOrHoverChange(_deps: unknown[]) {
@@ -44,11 +44,11 @@
 		focus.set(undefined);
 	}
 
-	function getStatus(id: AllS, focus: AllS | undefined) {
+	function getStatus(id: MemberPath, focus: MemberPath | undefined) {
 		if (focus === undefined) {
 			return 'normal';
 		}
-		if (focus === id) {
+		if (equalsMemberPath(focus, id)) {
 			return 'focused';
 		}
 		return 'blurred';
@@ -58,14 +58,14 @@
 <slot name="title" />
 <slot name="toolbar" />
 <form>
-	{#each members as name, index}
+	{#each members as id, index}
 		<ListItem
-			className={getStatus(name, $focus)}
+			className={getStatus(id, $focus)}
 			on:focus={(e) => onFocus(index, e.detail)}
 			on:hover={(e) => onHover(index, e.detail)}
-			on:select={() => onSelect(name)}
+			on:select={() => onSelect(id)}
 		>
-			<MemberCard {name} />
+			<MemberCard {id} />
 		</ListItem>
 	{/each}
 </form>

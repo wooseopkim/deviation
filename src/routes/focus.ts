@@ -1,6 +1,6 @@
+import type { MemberPath } from '$lib/groups/MemberPath';
 import { writable } from 'svelte/store';
-import type { AllS } from '$lib/triples/members';
 
-const focus = writable<AllS | undefined>();
+const focus = writable<MemberPath | undefined>();
 
 export default focus;

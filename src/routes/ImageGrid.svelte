@@ -1,9 +1,10 @@
 <script lang="ts">
-	import { members, type AllS } from '$lib/triples/members';
-	import { getThumbnail, getVideoId } from '$lib/triples/thumbnail';
+	import { getMember } from '$lib/groups';
+	import type { MemberPath } from '$lib/groups/MemberPath';
+	import { getThumbnail } from '$lib/thumbnail';
 
 	export let title: string;
-	let targetMembers: AllS[];
+	let targetMembers: MemberPath[];
 	export { targetMembers as members };
 
 	let canvas: HTMLCanvasElement;
@@ -36,12 +37,13 @@
 			const cellWidth = Math.ceil(canvasWidth / columns);
 
 			for (let j = 0; j < columns; j++) {
-				const name = remaining.shift() as AllS;
+				const id = remaining.shift() as MemberPath;
+				const [_group, member] = id;
 				const startX = cellWidth * j;
 				const startY = bannerHeight + rowHeight * i;
-				const color = members[name].color;
 
-				const videoId = getVideoId(name);
+				const { color, videoId, name } = getMember(id);
+
 				if (videoId === undefined) {
 					ctx.fillStyle = 'darkgrey';
 					ctx.fillRect(startX, startY, cellWidth, rowHeight);
@@ -92,7 +94,7 @@
 		ctx.fillStyle = 'black';
 		ctx.fillRect(0, 0, canvasWidth, bannerHeight);
 		ctx.fillStyle = 'white';
-		ctx.fillText(title || 'My unnamed DIMENSION', 0, fontUnit);
+		ctx.fillText(title || 'My unnamed palette', 0, fontUnit);
 
 		ctx.fillStyle = 'black';
 		ctx.fillRect(0, canvasHeight - footerHeight, canvasWidth, footerHeight);

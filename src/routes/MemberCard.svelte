@@ -1,21 +1,23 @@
 <script lang="ts">
-	import { members, type AllS, type Member } from '$lib/triples/members';
-	import { getThumbnail, getVideoId } from '$lib/triples/thumbnail';
+	import { getMember } from '$lib/groups';
+	import type { Member } from '$lib/groups/Member';
+	import type { MemberPath } from '$lib/groups/MemberPath';
+	import { getThumbnail } from '$lib/thumbnail';
 
-	export let name: AllS;
+	export let id: MemberPath;
 	let member: Member;
-	let videoId: string | undefined;
-	$: {
-		member = members[name];
-		videoId = getVideoId(name);
-	}
+	$: member = getMember(id);
 </script>
 
 <figure>
-	<figcaption style:background-color={member.color}><div>{name}</div></figcaption>
+	<figcaption style:background-color={member.color}><div>{member.name}</div></figcaption>
 	<picture>
-		{#if videoId !== undefined}
-			<img class="profile" alt={`profile, ${name}`} src={getThumbnail(videoId, 'medium')} />
+		{#if member.videoId !== undefined}
+			<img
+				class="profile"
+				alt={`profile, ${member.name}`}
+				src={getThumbnail(member.videoId, 'medium')}
+			/>
 		{:else}
 			<div class="profile placeholder">TBD</div>
 		{/if}

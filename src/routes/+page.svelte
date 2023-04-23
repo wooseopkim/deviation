@@ -1,41 +1,47 @@
 <script lang="ts">
-	import { allS } from '$lib/triples/members';
 	import MemberList from './MemberList.svelte';
-	import dimension from './dimension';
+	import palette from './palette';
 	import encodeShareCode from '$lib/share-code/encode';
 	import decodeShareCode from '$lib/share-code/decode';
 	import registerQuery from '$lib/store/query';
 	import registerLocalStorage from '$lib/store/local-storage';
 	import SectionTitle from './SectionTitle.svelte';
 	import ImageGrid from './ImageGrid.svelte';
+	import groups from '$lib/groups';
+	import type { MemberPath } from '$lib/groups/MemberPath';
+	import createPartial from '$lib/store/partial';
 
-	registerLocalStorage(dimension, 'dimension');
-	registerQuery(dimension, 'dimension', {
+	registerLocalStorage(palette, 'palette');
+	registerQuery(palette, 'palette', {
 		encode: encodeShareCode,
 		decode: decodeShareCode,
 	});
+
+	const all: MemberPath[] = groups.tripleS.members.map(({ id }) => ['S', id]);
 </script>
 
 <h1><super>https://</super><span><strong>deviation</strong><span>.by.wooseop.kim</span></span></h1>
 <main>
 	<section>
-		<MemberList members={allS}>
+		<MemberList members={all}>
 			<SectionTitle slot="title">All members</SectionTitle>
 		</MemberList>
 	</section>
 	<section>
-		<MemberList members={$dimension.members}>
+		<MemberList members={$palette.members}>
 			<SectionTitle
-				editable={true}
-				placeholder="Your unnamed DIMENSION — click here to edit"
+				edit={{
+					target: createPartial(palette, 'title'),
+					placeholder: 'Your unnamed palette — click here to edit',
+				}}
 				slot="title"
 			>
-				{$dimension.title}
+				{$palette.title}
 			</SectionTitle>
 		</MemberList>
-		{#if $dimension.members.length > 0}
+		{#if $palette.members.length > 0}
 			<SectionTitle>Image</SectionTitle>
-			<ImageGrid title={$dimension.title} members={$dimension.members} />
+			<ImageGrid title={$palette.title} members={$palette.members} />
 		{/if}
 	</section>
 </main>

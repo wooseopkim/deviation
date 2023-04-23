@@ -1,25 +1,25 @@
 <script lang="ts">
-	import dimension from './dimension';
+	import bindDom from '$lib/store/dom';
+	import type { Writable } from 'svelte/store';
 
-	let title: string;
-	export let editable: boolean = false;
-	export let placeholder: string = '';
+	export let edit:
+		| {
+				target: Writable<string>;
+				placeholder: string;
+		  }
+		| undefined = undefined;
 
-	function onTitleChange(title: string) {
-		dimension.update(({ title: _, ...rest }) => ({
-			title,
-			...rest,
-		}));
+	let dom: HTMLElement | undefined;
+	$: {
+		const target = edit?.target;
+		if (target !== undefined) {
+			bindDom(target, dom);
+		}
 	}
 </script>
 
-{#if editable}
-	<h3
-		contenteditable="true"
-		bind:textContent={title}
-		{placeholder}
-		on:input={(e) => onTitleChange(e.currentTarget?.textContent ?? '')}
-	>
+{#if edit !== undefined}
+	<h3 contenteditable="true" placeholder={edit.placeholder} bind:this={dom}>
 		<slot />
 	</h3>
 {:else}
