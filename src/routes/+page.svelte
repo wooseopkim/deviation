@@ -27,7 +27,7 @@
 		<MemberList members={$dimension.members}>
 			<SectionTitle
 				editable={true}
-				placeholder="Your unnamed Dimension — click here to edit"
+				placeholder="Your unnamed DIMENSION — click here to edit"
 				slot="title"
 			>
 				{$dimension.title}

@@ -92,7 +92,7 @@
 		ctx.fillStyle = 'black';
 		ctx.fillRect(0, 0, canvasWidth, bannerHeight);
 		ctx.fillStyle = 'white';
-		ctx.fillText(title || 'My unnamed Dimension', 0, fontUnit);
+		ctx.fillText(title || 'My unnamed DIMENSION', 0, fontUnit);
 
 		ctx.fillStyle = 'black';
 		ctx.fillRect(0, canvasHeight - footerHeight, canvasWidth, footerHeight);
