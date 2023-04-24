@@ -10,6 +10,8 @@
 	import groups from '$lib/groups';
 	import type { MemberPath } from '$lib/groups/MemberPath';
 	import createPartial from '$lib/store/partial';
+	import Toolbar from './Toolbar.svelte';
+	import ToolbarButton from './ToolbarButton.svelte';
 
 	registerLocalStorage(palette, 'palette');
 	registerQuery(palette, 'palette', {
@@ -18,6 +20,20 @@
 	});
 
 	const all: MemberPath[] = groups.tripleS.members.map(({ id }) => ['S', id]);
+
+	function onClearTitle() {
+		palette.update((value) => ({
+			...value,
+			title: '',
+		}));
+	}
+
+	function onClearMembers() {
+		palette.update((value) => ({
+			...value,
+			members: [],
+		}));
+	}
 </script>
 
 <h1><super>https://</super><span><strong>deviation</strong><span>.by.wooseop.kim</span></span></h1>
@@ -38,6 +54,14 @@
 			>
 				{$palette.title}
 			</SectionTitle>
+			<Toolbar slot="toolbar">
+				<ToolbarButton enabled={$palette.title.length > 0} on:click={onClearTitle}>
+					Clear title
+				</ToolbarButton>
+				<ToolbarButton enabled={$palette.members.length > 0} on:click={onClearMembers}>
+					Clear members
+				</ToolbarButton>
+			</Toolbar>
 		</MemberList>
 		{#if $palette.members.length > 0}
 			<SectionTitle>Image</SectionTitle>

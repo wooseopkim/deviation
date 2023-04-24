@@ -43,7 +43,4 @@ class DecoratorContext {
 
 const { getMember, getIndex } = DecoratorContext;
 
-export {
-	getMember,
-	getIndex,
-};
+export { getMember, getIndex };

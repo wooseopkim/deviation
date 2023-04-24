@@ -20,8 +20,8 @@ self.addEventListener('activate', (event) => {
 	async function deleteOldCaches() {
 		for (const key of await caches.keys()) {
 			if (key !== cacheName) {
-				await caches.delete(key)
-			};
+				await caches.delete(key);
+			}
 		}
 	}
 
@@ -30,8 +30,8 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
 	if (event.request.method !== 'GET') {
-		return
-	};
+		return;
+	}
 
 	async function respond() {
 		const url = new URL(event.request.url);
