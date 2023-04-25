@@ -7,7 +7,8 @@ export default function encodeShareCode({ title, members }: SubUnit) {
 		return '';
 	}
 	const ordered: string[] = members.map(([group, member]) => `${group}${member}`);
-	const sorted: string[] = ordered.sort();
-	const code: string = [version, title, ...[ordered, sorted].map((x) => x.join(''))].join(':');
-	return btoa(encodeURIComponent(code));
+	const code: string = [version, title, ordered.join('')].join(':');
+	const base64 = btoa(code);
+	const base64url = base64.replaceAll('+', '-').replaceAll('/', '_').replaceAll('=', '');
+	return base64url;
 }

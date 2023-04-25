@@ -25,8 +25,8 @@
 	}
 
 	function toggle(list: MemberPath[], id: MemberPath) {
-		if (list.includes(id)) {
-			const index = list.indexOf(id);
+		const index = list.findIndex((x) => equalsMemberPath(x, id));
+		if (index !== -1) {
 			return [...list.slice(0, index), ...list.slice(index + 1)];
 		}
 		return [...list, id];

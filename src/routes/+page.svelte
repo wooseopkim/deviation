@@ -7,19 +7,50 @@
 	import registerLocalStorage from '$lib/store/local-storage';
 	import SectionTitle from './SectionTitle.svelte';
 	import ImageGrid from './ImageGrid.svelte';
-	import groups from '$lib/groups';
-	import type { MemberPath } from '$lib/groups/MemberPath';
+	import groups, { toPath } from '$lib/groups';
+	import { equalsMemberPath, type MemberPath } from '$lib/groups/MemberPath';
 	import createPartial from '$lib/store/partial';
 	import Toolbar from './Toolbar.svelte';
 	import ToolbarButton from './ToolbarButton.svelte';
+	import type { SubUnit } from '$lib/groups/SubUnit';
+	import { allPresets, customPresets } from './presets';
+	import { derived } from 'svelte/store';
 
 	registerLocalStorage(palette, 'palette');
 	registerQuery(palette, 'palette', {
 		encode: encodeShareCode,
 		decode: decodeShareCode,
 	});
+	registerLocalStorage(customPresets, 'customPresets');
 
-	const all: MemberPath[] = groups.tripleS.members.map(({ id }) => ['S', id]);
+	const group = 'tripleS';
+	const { id, members } = groups[group];
+	const all: SubUnit<typeof group>['members'] = members.map(({ name }) => toPath(group, name));
+	const presets = derived(allPresets, (x) => x.filter(({ data }) => data.members.some(([groupId]) => groupId === id)));
+
+	function onAddAll(members: MemberPath[]) {
+		palette.update((value) => {
+			const noDuplicate = (x: MemberPath) => !value.members.some(equalsMemberPath.bind(undefined, x));
+			return {
+				...value,
+				members: [...value.members, ...members.filter(noDuplicate)],
+			};
+		});
+	}
+
+	function onReplace(preset: SubUnit) {
+		palette.set(preset);
+	}
+
+	function onDelete(preset: SubUnit) {
+		customPresets.update((value) => {
+			const index = value.indexOf(preset);
+			return [
+				...value.slice(0, index),
+				...value.slice(index + 1)
+			];
+		});
+	}
 
 	function onClearTitle() {
 		palette.update((value) => ({
@@ -34,6 +65,13 @@
 			members: [],
 		}));
 	}
+
+	function onSavePreset() {
+		customPresets.update((value) => {
+			const preset = $palette;
+			return [...value, { ...preset, title: preset.title || 'Your unnamed preset' }];
+		});
+	}
 </script>
 
 <h1><super>https://</super><span><strong>deviation</strong><span>.by.wooseop.kim</span></span></h1>
@@ -42,6 +80,21 @@
 		<MemberList members={all}>
 			<SectionTitle slot="title">All members</SectionTitle>
 		</MemberList>
+		{#each $presets as { builtIn, data: preset }}
+			<MemberList members={preset.members}>
+				<SectionTitle slot="title">{preset.title}</SectionTitle>
+				<Toolbar slot="toolbar">
+					<ToolbarButton on:click={() => onAddAll(preset.members)}>Add all</ToolbarButton>
+					<ToolbarButton on:click={() => onReplace(preset)}>Replace</ToolbarButton>
+					{#if !builtIn}
+						<ToolbarButton on:click={() => onDelete(preset)}>Delete</ToolbarButton>
+					{/if}
+					<ToolbarButton enabled={$palette.members.length > 0}>
+						Copy share code
+					</ToolbarButton>
+				</Toolbar>
+			</MemberList>
+		{/each}
 	</section>
 	<section>
 		<MemberList members={$palette.members}>
@@ -60,6 +113,12 @@
 				</ToolbarButton>
 				<ToolbarButton enabled={$palette.members.length > 0} on:click={onClearMembers}>
 					Clear members
+				</ToolbarButton>
+				<ToolbarButton enabled={$palette.members.length > 0} on:click={onSavePreset}>
+					Save as preset
+				</ToolbarButton>
+				<ToolbarButton enabled={$palette.members.length > 0}>
+					Copy share code
 				</ToolbarButton>
 			</Toolbar>
 		</MemberList>

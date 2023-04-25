@@ -12,14 +12,14 @@ const groups = {
 
 export type Group = keyof typeof groups;
 
-type HasThisStructure = {
+type GenericGroup = {
 	[key in Group]: {
 		id: Id;
 		keys: readonly string[];
 		members: readonly Member[];
 	};
 };
-groups as HasThisStructure;
+groups as GenericGroup;
 
 export default groups;
 
@@ -39,8 +39,19 @@ class DecoratorContext {
 		};
 		return members.findIndex(({ id }) => id === member);
 	}
+
+	@memoized()
+	static toPath<G extends Group>(group: G, key: typeof groups[G]['keys'][number]): MemberPath<G> {
+		const { id: groupId, members } = groups[group] as GenericGroup[G];
+		const memberId = members?.find(({ name }) => name === key)?.id ?? undefined;
+		return [groupId, memberId] as MemberPath<G>;
+	}
 }
 
-const { getMember, getIndex } = DecoratorContext;
+const { getMember, getIndex, toPath } = DecoratorContext;
 
-export { getMember, getIndex };
+export {
+	getMember,
+	getIndex,
+	toPath,
+};

@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import encodeShareCode from './encode';
 import type { SubUnit } from '$lib/groups/SubUnit';
 import decodeShareCode from './decode';
+import { toPath } from '$lib/groups';
 
 describe(encodeShareCode.name, () => {
 	it('returns non-empty string', () => {
@@ -20,10 +21,12 @@ describe(encodeShareCode.name, () => {
 
 	it('returns string of decent length', () => {
 		const unit: SubUnit = {
-			title: 'LET THERE BE LIGHT',
+			title: 'Acid Angel from Asia',
 			members: [
-				['L', '1'],
-				['S', 'a'],
+				toPath('tripleS', 'NaKyoung'),
+				toPath('tripleS', 'HyeRin'),
+				toPath('tripleS', 'YuBin'),
+				toPath('tripleS', 'YooYeon'),
 			],
 		};
 
@@ -41,8 +44,8 @@ describe(encodeShareCode.name, () => {
 			],
 		};
 
-		const firstCode = encodeShareCode(unit);
-		const retrieved = decodeShareCode(firstCode);
+		const code = encodeShareCode(unit);
+		const retrieved = decodeShareCode(code);
 
 		expect(unit).toStrictEqual(retrieved);
 	});

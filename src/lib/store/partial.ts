@@ -1,23 +1,34 @@
 import { derived, type Writable } from 'svelte/store';
 
-export default function createPartial<T, K extends keyof T>(
-	original: Writable<T>,
-	key: K
-): Writable<T[K]> {
-	const partial = derived(original, (value) => value[key]);
+type KeySpec<T> = keyof T;
+type ObjectSpec<T, P> = {
+	read: (x: T) => P;
+	update: (x: T, value: P) => T;
+}
+type Spec<T, P> = KeySpec<T> | ObjectSpec<T, P>;
 
-	const set: Writable<T[K]>['set'] = (partialValue) => {
-		original.update((x) => ({
-			...x,
-			[key]: partialValue,
-		}));
+export function createPartial<T, K extends KeySpec<T>>(
+	original: Writable<T>,
+	key: K,
+): Writable<T[K]>;
+export function createPartial<T, P>(
+	original: Writable<T>,
+	spec: ObjectSpec<T, P>,
+): Writable<P>;
+export default function createPartial<T, P>(
+	original: Writable<T>,
+	spec: Spec<T, P>,
+): Writable<P> {
+	const { read, update: write } = parseSpec<T, P>(spec);
+
+	const partial = derived(original, read);
+
+	const set: Writable<P>['set'] = (partialValue) => {
+		original.update((x) => write(x, partialValue));
 	};
 
-	const update: Writable<T[K]>['update'] = (partialUpdate) => {
-		original.update((x) => ({
-			...x,
-			[key]: partialUpdate(x[key]),
-		}));
+	const update: Writable<P>['update'] = (partialUpdate) => {
+		original.update((x) => write(x, partialUpdate(read(x))));
 	};
 
 	return {
@@ -25,4 +36,18 @@ export default function createPartial<T, K extends keyof T>(
 		set,
 		update,
 	};
+}
+
+function parseSpec<T, P>(spec: Readonly<Spec<T, P>>): ObjectSpec<T, P> {
+	if (typeof spec === 'object') {
+		return spec;
+	}
+
+	return {
+		read: (x: T) => x[spec],
+		update: (x: T, value: P) => ({
+			...x,
+			[spec]: value,
+		}),
+	} as ObjectSpec<T, P>;
 }
