@@ -101,6 +101,7 @@
 
 	summary > :global(*) {
 		display: inline-block;
+		width: 100%;
 	}
 
 	form {

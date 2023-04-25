@@ -11,10 +11,11 @@
 	import { equalsMemberPath, type MemberPath } from '$lib/groups/MemberPath';
 	import createPartial from '$lib/store/partial';
 	import Toolbar from './Toolbar.svelte';
-	import ToolbarButton from './ToolbarButton.svelte';
+	import Button from './Button.svelte';
 	import type { SubUnit } from '$lib/groups/SubUnit';
 	import { allPresets, customPresets } from './presets';
 	import { derived } from 'svelte/store';
+	import LoadingButton from './LoadingButton.svelte';
 
 	registerLocalStorage(palette, 'palette');
 	registerQuery(palette, 'palette', {
@@ -66,6 +67,33 @@
 		}));
 	}
 
+	function onCopyShareCode(
+		{
+			setTask,
+		}: {
+			setTask: (value: Promise<void>, text: string) => void;
+		},
+		unit: SubUnit
+	) {
+		const code = encodeShareCode(unit);
+		window.navigator.clipboard.writeText(code);
+		const wait = new Promise<void>((resolve) => setTimeout(resolve, 1000));
+		setTask(wait, `Copied ${code}`);
+	}
+
+	function onLoadShareCode() {
+		const code = prompt('Share code:') ?? '';
+		if (code.length === 0) {
+			return;
+		}
+		try {
+			const unit = decodeShareCode(code);
+			palette.set(unit);
+		} catch {
+			alert(`Invalid code: ${code}`);
+		}
+	}
+
 	function onSavePreset() {
 		customPresets.update((value) => {
 			const preset = $palette;
@@ -84,12 +112,17 @@
 			<MemberList members={preset.members}>
 				<SectionTitle slot="title">{preset.title}</SectionTitle>
 				<Toolbar slot="toolbar">
-					<ToolbarButton on:click={() => onAddAll(preset.members)}>Add all</ToolbarButton>
-					<ToolbarButton on:click={() => onReplace(preset)}>Replace</ToolbarButton>
+					<Button on:click={() => onAddAll(preset.members)}>Add all</Button>
+					<Button on:click={() => onReplace(preset)}>Replace</Button>
 					{#if !builtIn}
-						<ToolbarButton on:click={() => onDelete(preset)}>Delete</ToolbarButton>
+						<Button on:click={() => onDelete(preset)}>Delete</Button>
 					{/if}
-					<ToolbarButton enabled={$palette.members.length > 0}>Copy share code</ToolbarButton>
+					<LoadingButton
+						enabled={preset.members.length > 0}
+						on:click={(e) => onCopyShareCode(e.detail, preset)}
+					>
+						Copy share code
+					</LoadingButton>
 				</Toolbar>
 			</MemberList>
 		{/each}
@@ -106,16 +139,20 @@
 				{$palette.title}
 			</SectionTitle>
 			<Toolbar slot="toolbar">
-				<ToolbarButton enabled={$palette.title.length > 0} on:click={onClearTitle}>
-					Clear title
-				</ToolbarButton>
-				<ToolbarButton enabled={$palette.members.length > 0} on:click={onClearMembers}>
+				<Button enabled={$palette.title.length > 0} on:click={onClearTitle}>Clear title</Button>
+				<Button enabled={$palette.members.length > 0} on:click={onClearMembers}>
 					Clear members
-				</ToolbarButton>
-				<ToolbarButton enabled={$palette.members.length > 0} on:click={onSavePreset}>
+				</Button>
+				<Button enabled={$palette.members.length > 0} on:click={onSavePreset}>
 					Save as preset
-				</ToolbarButton>
-				<ToolbarButton enabled={$palette.members.length > 0}>Copy share code</ToolbarButton>
+				</Button>
+				<LoadingButton
+					enabled={$palette.members.length > 0}
+					on:click={(e) => onCopyShareCode(e.detail, $palette)}
+				>
+					Copy share code
+				</LoadingButton>
+				<Button on:click={onLoadShareCode}>Load share code</Button>
 			</Toolbar>
 		</MemberList>
 		{#if $palette.members.length > 0}
