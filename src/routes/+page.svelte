@@ -24,6 +24,8 @@
 	});
 	registerLocalStorage(customPresets, 'customPresets');
 
+	const gitHubRepositoryUrl = 'https://github.com/wooseopkim/deviation';
+
 	const group = 'tripleS';
 	const { id, members } = groups[group];
 	const all: SubUnit<typeof group>['members'] = members.map(({ name }) => toPath(group, name));
@@ -244,6 +246,11 @@
 		overflow-y: scroll;
 	}
 
+	section {
+		display: flex;
+		flex-direction: column;
+	}
+
 	.grid-wrapper {
 		width: 100%;
 		container-type: inline-size;
@@ -251,6 +258,17 @@
 
 	.grid-wrapper :global(canvas) {
 		max-width: 100cqi;
+	}
+
+	article {
+		--padding-horizontal: 1.4rem;
+		--padding-vertical: 1rem;
+		background-color: rgba(0, 0, 0, 0.27);
+		padding-block-start: var(--padding-vertical);
+		padding-block-end: var(--padding-vertical);
+		padding-inline-start: var(--padding-horizontal);
+		padding-inline-end: var(--padding-horizontal);
+		flex-grow: 1;
 	}
 
 	@media (max-width: 1680px) {
