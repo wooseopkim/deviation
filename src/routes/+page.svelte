@@ -120,7 +120,9 @@
 		</MemberList>
 		{#if $palette.members.length > 0}
 			<SectionTitle>Image</SectionTitle>
-			<ImageGrid title={$palette.title} members={$palette.members} />
+			<div class="grid-wrapper">
+				<ImageGrid title={$palette.title} members={$palette.members} />
+			</div>
 		{/if}
 	</section>
 </main>
@@ -180,6 +182,15 @@
 	main > :global(*) {
 		width: 50%;
 		overflow-y: scroll;
+	}
+
+	.grid-wrapper {
+		width: 100%;
+		container-type: inline-size;
+	}
+
+	.grid-wrapper :global(canvas) {
+		max-width: 100cqi;
 	}
 
 	@media (max-width: 1680px) {
