@@ -27,11 +27,8 @@
 {/if}
 
 <style>
-	:root {
-		--title-max-width: 80%;
-	}
-
 	h3 {
+		--title-max-width: 80%;
 		max-width: var(--title-max-width);
 		--padding-horizontal: 0.25em;
 		--padding-vertical: 1em;

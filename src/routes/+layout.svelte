@@ -6,12 +6,22 @@
 	/>
 </svelte:head>
 
-<slot />
+<div>
+	<slot />
+</div>
 
 <style>
 	:root {
 		font-family: 'Archivo Black', sans-serif;
 		background-color: #fefefe;
 		color: #202020;
+	}
+
+	div {
+		width: 100vi;
+		height: 100vb;
+		display: flex;
+		flex-direction: column;
+		min-height: 100vb;
 	}
 </style>

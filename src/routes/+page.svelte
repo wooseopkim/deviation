@@ -161,18 +161,36 @@
 				<ImageGrid title={$palette.title} members={$palette.members} />
 			</div>
 		{/if}
+		<SectionTitle>About this app</SectionTitle>
+		<article>
+			<p>Hi!</p>
+			<p>
+				This app is not affiliated with any company including Modhaus. This is just a non-commercial
+				fan app. Any right to use group and member names commercially belongs to their companies.
+				The profile pictures are their intellectual properties. The app displays images by linking
+				to YouTube thumbnails, but I'm still looking for a way to use images that are 100% safe to
+				use in terms of copyright.
+			</p>
+			<p>
+				If you find the app interesting and you're a WAV, you can send some Objekts to Cosmo
+				username wooseop, but you don't have to. Same username on the official tripleS Discord
+				server.
+			</p>
+			<p>
+				You can see the source code at
+				<a href={gitHubRepositoryUrl} target="_blank">
+					{gitHubRepositoryUrl}
+				</a>.
+			</p>
+		</article>
 	</section>
 </main>
 
 <style>
-	:root {
-		overflow: hidden;
-	}
-
 	h1 {
+		flex-shrink: 0;
 		user-select: none;
 		margin: 0;
-		position: sticky;
 		display: flex;
 		flex-direction: column;
 		--non-title-margin-start: 0.5vmin;
@@ -212,10 +230,12 @@
 	}
 
 	main {
+		flex-shrink: 1;
+		flex-grow: 1;
+		overflow: auto;
 		display: flex;
 		flex-direction: row;
 		margin-inline-start: 0.4rem;
-		height: calc(100vh - var(--padding-top));
 		--card-width: 10vi;
 	}
 
@@ -234,12 +254,7 @@
 	}
 
 	@media (max-width: 1680px) {
-		:root {
-			overflow: auto;
-		}
-
 		h1 {
-			position: initial;
 			padding-bottom: 1em;
 		}
 
@@ -247,6 +262,7 @@
 			flex-direction: column;
 			--padding-top: 1rem;
 			--card-width: 20vi;
+			overflow: initial;
 		}
 
 		main > :global(*) {

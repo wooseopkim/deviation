@@ -44,7 +44,7 @@
 		}
 	}
 
-	@media (min-width: 1440px) {
+	@media (min-width: 1680px) {
 		figcaption {
 			font-size: 1.4em;
 		}
