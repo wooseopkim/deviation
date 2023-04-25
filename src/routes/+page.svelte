@@ -26,11 +26,14 @@
 	const group = 'tripleS';
 	const { id, members } = groups[group];
 	const all: SubUnit<typeof group>['members'] = members.map(({ name }) => toPath(group, name));
-	const presets = derived(allPresets, (x) => x.filter(({ data }) => data.members.some(([groupId]) => groupId === id)));
+	const presets = derived(allPresets, (x) =>
+		x.filter(({ data }) => data.members.some(([groupId]) => groupId === id))
+	);
 
 	function onAddAll(members: MemberPath[]) {
 		palette.update((value) => {
-			const noDuplicate = (x: MemberPath) => !value.members.some(equalsMemberPath.bind(undefined, x));
+			const noDuplicate = (x: MemberPath) =>
+				!value.members.some(equalsMemberPath.bind(undefined, x));
 			return {
 				...value,
 				members: [...value.members, ...members.filter(noDuplicate)],
@@ -45,10 +48,7 @@
 	function onDelete(preset: SubUnit) {
 		customPresets.update((value) => {
 			const index = value.indexOf(preset);
-			return [
-				...value.slice(0, index),
-				...value.slice(index + 1)
-			];
+			return [...value.slice(0, index), ...value.slice(index + 1)];
 		});
 	}
 
@@ -89,9 +89,7 @@
 					{#if !builtIn}
 						<ToolbarButton on:click={() => onDelete(preset)}>Delete</ToolbarButton>
 					{/if}
-					<ToolbarButton enabled={$palette.members.length > 0}>
-						Copy share code
-					</ToolbarButton>
+					<ToolbarButton enabled={$palette.members.length > 0}>Copy share code</ToolbarButton>
 				</Toolbar>
 			</MemberList>
 		{/each}
@@ -117,9 +115,7 @@
 				<ToolbarButton enabled={$palette.members.length > 0} on:click={onSavePreset}>
 					Save as preset
 				</ToolbarButton>
-				<ToolbarButton enabled={$palette.members.length > 0}>
-					Copy share code
-				</ToolbarButton>
+				<ToolbarButton enabled={$palette.members.length > 0}>Copy share code</ToolbarButton>
 			</Toolbar>
 		</MemberList>
 		{#if $palette.members.length > 0}

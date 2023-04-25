@@ -41,7 +41,7 @@ class DecoratorContext {
 	}
 
 	@memoized()
-	static toPath<G extends Group>(group: G, key: typeof groups[G]['keys'][number]): MemberPath<G> {
+	static toPath<G extends Group>(group: G, key: (typeof groups)[G]['keys'][number]): MemberPath<G> {
 		const { id: groupId, members } = groups[group] as GenericGroup[G];
 		const memberId = members?.find(({ name }) => name === key)?.id ?? undefined;
 		return [groupId, memberId] as MemberPath<G>;
@@ -50,8 +50,4 @@ class DecoratorContext {
 
 const { getMember, getIndex, toPath } = DecoratorContext;
 
-export {
-	getMember,
-	getIndex,
-	toPath,
-};
+export { getMember, getIndex, toPath };

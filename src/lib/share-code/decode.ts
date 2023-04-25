@@ -18,5 +18,5 @@ export default function decodeShareCode(encoded: string): SubUnit {
 }
 
 function padBase64Url(s: string) {
-	return s.padEnd(s.length + (4 - s.length % 4) % 4, '=');
+	return s.padEnd(s.length + ((4 - (s.length % 4)) % 4), '=');
 }
