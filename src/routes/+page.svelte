@@ -135,7 +135,7 @@
 	h1 {
 		user-select: none;
 		margin: 0;
-		position: fixed;
+		position: sticky;
 		display: flex;
 		flex-direction: column;
 		--non-title-margin-start: 0.5vmin;
@@ -147,6 +147,7 @@
 
 	h1 super {
 		margin-inline-start: var(--non-title-margin-start);
+		line-height: 1.4em;
 	}
 
 	h1 strong {
@@ -154,6 +155,10 @@
 		font-size: 16vmin;
 		line-height: 0.6em;
 		margin-inline-start: var(--title-margin-start);
+	}
+
+	h1 span span {
+		margin-inline-start: -0.2em;
 	}
 
 	@media (max-width: 1680px) {
@@ -172,8 +177,6 @@
 	main {
 		display: flex;
 		flex-direction: row;
-		--padding-top: 16vmin;
-		padding-top: var(--padding-top);
 		margin-inline-start: 0.4rem;
 		height: calc(100vh - var(--padding-top));
 		--card-width: 10vi;
@@ -199,12 +202,13 @@
 		}
 
 		h1 {
-			position: inherit;
+			position: initial;
+			padding-bottom: 1em;
 		}
 
 		main {
 			flex-direction: column;
-			--padding-top: 2rem;
+			--padding-top: 1rem;
 			--card-width: 20vi;
 		}
 
