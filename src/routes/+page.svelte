@@ -77,7 +77,7 @@
 <h1><super>https://</super><span><strong>deviation</strong><span>.by.wooseop.kim</span></span></h1>
 <main>
 	<section>
-		<MemberList members={all}>
+		<MemberList summarized={false} members={all}>
 			<SectionTitle slot="title">All members</SectionTitle>
 		</MemberList>
 		{#each $presets as { builtIn, data: preset }}
@@ -97,7 +97,7 @@
 		{/each}
 	</section>
 	<section>
-		<MemberList members={$palette.members}>
+		<MemberList summarized={false} members={$palette.members}>
 			<SectionTitle
 				edit={{
 					target: createPartial(palette, 'title'),

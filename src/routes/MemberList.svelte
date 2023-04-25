@@ -6,6 +6,7 @@
 	import { equalsMemberPath, type MemberPath } from '$lib/groups/MemberPath';
 
 	export let members: readonly MemberPath[];
+	export let summarized = true;
 
 	let focused: number | undefined;
 	let hovered: number | undefined;
@@ -44,6 +45,13 @@
 		focus.set(undefined);
 	}
 
+	function onSummaryToggle(e: Event) {
+		if (summarized) {
+			return;
+		}
+		e.preventDefault();
+	}
+
 	function getStatus(id: MemberPath, focus: MemberPath | undefined) {
 		if (focus === undefined) {
 			return 'normal';
@@ -55,22 +63,46 @@
 	}
 </script>
 
-<slot name="title" />
-<slot name="toolbar" />
-<form>
-	{#each members as id, index}
-		<ListItem
-			className={getStatus(id, $focus)}
-			on:focus={(e) => onFocus(index, e.detail)}
-			on:hover={(e) => onHover(index, e.detail)}
-			on:select={() => onSelect(id)}
-		>
-			<MemberCard {id} />
-		</ListItem>
-	{/each}
-</form>
+<details class={summarized ? 'enabled' : 'disabled'} open={!summarized}>
+	<summary on:click={onSummaryToggle}>
+		<slot name="title" />
+	</summary>
+	<slot name="toolbar" />
+	<form>
+		{#each members as id, index}
+			<ListItem
+				className={getStatus(id, $focus)}
+				on:focus={(e) => onFocus(index, e.detail)}
+				on:hover={(e) => onHover(index, e.detail)}
+				on:select={() => onSelect(id)}
+			>
+				<MemberCard {id} />
+			</ListItem>
+		{/each}
+	</form>
+</details>
 
 <style>
+	summary {
+		user-select: none;
+	}
+
+	summary:focus {
+		border: none;
+	}
+
+	details.enabled summary {
+		cursor: pointer;
+	}
+
+	details.disabled summary::marker {
+		color: transparent;
+	}
+
+	summary > :global(*) {
+		display: inline-block;
+	}
+
 	form {
 		display: flex;
 		flex-wrap: wrap;
