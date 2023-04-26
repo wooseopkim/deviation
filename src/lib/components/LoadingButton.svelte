@@ -1,19 +1,20 @@
+<script lang="ts" context="module">
+	export type SetTask = (task: Promise<void>, loader: string) => void;
+</script>
+
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 	import Button from './Button.svelte';
 
-	export let enabled = true;
 	let task: Promise<void>;
 	let loader: string;
 
 	const dispatch = createEventDispatcher<{
-		click: {
-			setTask: typeof setTask;
-		};
+		click: SetTask;
 	}>();
 
 	function onClick() {
-		dispatch('click', { setTask });
+		dispatch('click', setTask);
 	}
 
 	function setTask(value: typeof task, text: string) {
@@ -24,10 +25,14 @@
 
 {#await task}
 	<Button enabled={false}>
-		{loader ?? ''}
+		{#if loader !== undefined}
+			{loader}
+		{:else}
+			<slot />
+		{/if}
 	</Button>
 {:then}
-	<Button {enabled} on:click={onClick}>
+	<Button on:click={onClick}>
 		<slot />
 	</Button>
 {/await}

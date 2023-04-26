@@ -1,8 +1,8 @@
-import { describe, expect, it } from 'vitest';
-import encodeShareCode from './encode';
-import type { SubUnit } from '$lib/groups/SubUnit';
-import decodeShareCode from './decode';
 import { toPath } from '$lib/groups';
+import type { SubUnit } from '$lib/groups/SubUnit';
+import { describe, expect, it } from 'vitest';
+import decodeShareCode from './decode';
+import encodeShareCode from './encode';
 
 describe(encodeShareCode.name, () => {
 	it('returns non-empty string', () => {

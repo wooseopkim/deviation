@@ -1,21 +1,29 @@
 <script lang="ts">
-	import MemberList from './MemberList.svelte';
-	import palette from './palette';
-	import encodeShareCode from '$lib/share-code/encode';
-	import decodeShareCode from '$lib/share-code/decode';
-	import registerQuery from '$lib/store/query';
-	import registerLocalStorage from '$lib/store/local-storage';
-	import SectionTitle from './SectionTitle.svelte';
-	import ImageGrid from './ImageGrid.svelte';
+	import SectionTitle from '$lib/components/SectionTitle.svelte';
 	import groups, { toPath } from '$lib/groups';
 	import { equalsMemberPath, type MemberPath } from '$lib/groups/MemberPath';
-	import createPartial from '$lib/store/partial';
-	import Toolbar from './Toolbar.svelte';
-	import Button from './Button.svelte';
 	import type { SubUnit } from '$lib/groups/SubUnit';
-	import { allPresets, customPresets } from './presets';
+	import decodeShareCode from '$lib/share-code/decode';
+	import encodeShareCode from '$lib/share-code/encode';
+	import registerLocalStorage from '$lib/store/local-storage';
+	import registerQuery from '$lib/store/query';
 	import { derived } from 'svelte/store';
-	import LoadingButton from './LoadingButton.svelte';
+	import AddAll from './(components)/(buttons)/AddAll.svelte';
+	import ClearMembers from './(components)/(buttons)/ClearMembers.svelte';
+	import ClearTitle from './(components)/(buttons)/ClearTitle.svelte';
+	import CopyShareCode from './(components)/(buttons)/CopyShareCode.svelte';
+	import Delete from './(components)/(buttons)/Delete.svelte';
+	import LoadShareCode from './(components)/(buttons)/LoadShareCode.svelte';
+	import Replace from './(components)/(buttons)/Replace.svelte';
+	import SaveAsPreset from './(components)/(buttons)/SaveAsPreset.svelte';
+	import About from './(components)/(sections)/About.svelte';
+	import All from './(components)/(sections)/All.svelte';
+	import Image from './(components)/(sections)/Image.svelte';
+	import Palette from './(components)/(sections)/Palette.svelte';
+	import PresetList from './(components)/(sections)/Presets.svelte';
+	import focus from './(store)/focus';
+	import palette from './(store)/palette';
+	import { allPresets, customPresets } from './(store)/presets';
 
 	registerLocalStorage(palette, 'palette');
 	registerQuery(palette, 'palette', {
@@ -24,8 +32,6 @@
 	});
 	registerLocalStorage(customPresets, 'customPresets');
 
-	const gitHubRepositoryUrl = 'https://github.com/wooseopkim/deviation';
-
 	const group = 'tripleS';
 	const { id, members } = groups[group];
 	const all: SubUnit<typeof group>['members'] = members.map(({ name }) => toPath(group, name));
@@ -33,158 +39,52 @@
 		x.filter(({ data }) => data.members.some(([groupId]) => groupId === id))
 	);
 
-	function onAddAll(members: MemberPath[]) {
-		palette.update((value) => {
-			const noDuplicate = (x: MemberPath) =>
-				!value.members.some(equalsMemberPath.bind(undefined, x));
-			return {
-				...value,
-				members: [...value.members, ...members.filter(noDuplicate)],
-			};
-		});
-	}
-
-	function onReplace(preset: SubUnit) {
-		palette.set(preset);
-	}
-
-	function onDelete(preset: SubUnit) {
-		customPresets.update((value) => {
-			const index = value.indexOf(preset);
-			return [...value.slice(0, index), ...value.slice(index + 1)];
-		});
-	}
-
-	function onClearTitle() {
+	function onSelectMember(id: MemberPath) {
 		palette.update((value) => ({
 			...value,
-			title: '',
+			members: toggle(value.members, id),
 		}));
 	}
 
-	function onClearMembers() {
-		palette.update((value) => ({
-			...value,
-			members: [],
-		}));
-	}
-
-	function onCopyShareCode(
-		{
-			setTask,
-		}: {
-			setTask: (value: Promise<void>, text: string) => void;
-		},
-		unit: SubUnit
-	) {
-		const code = encodeShareCode(unit);
-		window.navigator.clipboard.writeText(code);
-		const wait = new Promise<void>((resolve) => setTimeout(resolve, 1000));
-		setTask(wait, `Copied ${code}`);
-	}
-
-	function onLoadShareCode() {
-		const code = prompt('Share code:') ?? '';
-		if (code.length === 0) {
-			return;
+	function toggle(list: MemberPath[], id: MemberPath) {
+		const index = list.findIndex((x) => equalsMemberPath(x, id));
+		if (index !== -1) {
+			return [...list.slice(0, index), ...list.slice(index + 1)];
 		}
-		try {
-			const unit = decodeShareCode(code);
-			palette.set(unit);
-		} catch {
-			alert(`Invalid code: ${code}`);
-		}
-	}
-
-	function onSavePreset() {
-		customPresets.update((value) => {
-			const preset = $palette;
-			return [...value, { ...preset, title: preset.title || 'Your unnamed preset' }];
-		});
+		return [...list, id];
 	}
 </script>
 
 <h1><super>https://</super><span><strong>deviation</strong><span>.by.wooseop.kim</span></span></h1>
 <main>
 	<section>
-		<MemberList summarized={false} members={all}>
-			<SectionTitle slot="title">All members</SectionTitle>
-		</MemberList>
-		{#each $presets as { builtIn, data: preset }}
-			<MemberList members={preset.members}>
-				<SectionTitle slot="title">{preset.title}</SectionTitle>
-				<Toolbar slot="toolbar">
-					<Button on:click={() => onAddAll(preset.members)}>Add all</Button>
-					<Button on:click={() => onReplace(preset)}>Replace</Button>
-					{#if !builtIn}
-						<Button on:click={() => onDelete(preset)}>Delete</Button>
-					{/if}
-					<LoadingButton
-						enabled={preset.members.length > 0}
-						on:click={(e) => onCopyShareCode(e.detail, preset)}
-					>
-						Copy share code
-					</LoadingButton>
-				</Toolbar>
-			</MemberList>
-		{/each}
+		<All data={all} {focus} on:select={(e) => onSelectMember(e.detail)} />
+		<PresetList data={presets} {focus} on:select={(e) => onSelectMember(e.detail)}>
+			<svelte:fragment slot="buttons" let:context={{ builtIn, data }}>
+				<AddAll data={data.members} to={palette} />
+				<Replace {data} into={palette} />
+				{#if !builtIn}
+					<Delete {data} from={customPresets} />
+				{/if}
+				<CopyShareCode of={data} />
+			</svelte:fragment>
+		</PresetList>
 	</section>
 	<section>
-		<MemberList summarized={false} members={$palette.members}>
-			<SectionTitle
-				edit={{
-					target: createPartial(palette, 'title'),
-					placeholder: 'Your unnamed palette — click here to edit',
-				}}
-				slot="title"
-			>
-				{$palette.title}
-			</SectionTitle>
-			<Toolbar slot="toolbar">
-				<Button enabled={$palette.title.length > 0} on:click={onClearTitle}>Clear title</Button>
-				<Button enabled={$palette.members.length > 0} on:click={onClearMembers}>
-					Clear members
-				</Button>
-				<Button enabled={$palette.members.length > 0} on:click={onSavePreset}>
-					Save as preset
-				</Button>
-				<LoadingButton
-					enabled={$palette.members.length > 0}
-					on:click={(e) => onCopyShareCode(e.detail, $palette)}
-				>
-					Copy share code
-				</LoadingButton>
-				<Button on:click={onLoadShareCode}>Load share code</Button>
-			</Toolbar>
-		</MemberList>
+		<Palette data={palette} {focus} on:select={(e) => onSelectMember(e.detail)}>
+			<svelte:fragment slot="buttons" let:context={data}>
+				<ClearTitle of={palette} />
+				<ClearMembers of={palette} />
+				<SaveAsPreset {data} />
+				<CopyShareCode of={data} />
+				<LoadShareCode into={palette} />
+			</svelte:fragment>
+		</Palette>
 		{#if $palette.members.length > 0}
-			<SectionTitle>Image</SectionTitle>
-			<div class="grid-wrapper">
-				<ImageGrid title={$palette.title} members={$palette.members} />
-			</div>
+			<Image data={$palette} />
 		{/if}
 		<SectionTitle>About this app</SectionTitle>
-		<article>
-			<p>Hi!</p>
-			<p>
-				This app is not affiliated with any company including Modhaus. This is just a non-commercial
-				fan app. Any right to use group and member names commercially belongs to their companies.
-				The profile pictures are their intellectual properties. The app displays images by linking
-				to YouTube thumbnails, but I'm still looking for a way to use images that are 100% safe to
-				use in terms of copyright.
-			</p>
-			<p>
-				If you find the app interesting and you're a WAV, you can send some Objekts to Cosmo
-				username wooseop, but you don't have to. Same username on the official tripleS Discord
-				server.
-			</p>
-			<p>
-				You can see the source code at
-				<a href={gitHubRepositoryUrl} target="_blank">
-					{gitHubRepositoryUrl}
-				</a>.
-			</p>
-		</article>
+		<About />
 	</section>
 </main>
 
@@ -249,26 +149,6 @@
 	section {
 		display: flex;
 		flex-direction: column;
-	}
-
-	.grid-wrapper {
-		width: 100%;
-		container-type: inline-size;
-	}
-
-	.grid-wrapper :global(canvas) {
-		max-width: 100cqi;
-	}
-
-	article {
-		--padding-horizontal: 1.4rem;
-		--padding-vertical: 1rem;
-		background-color: rgba(0, 0, 0, 0.27);
-		padding-block-start: var(--padding-vertical);
-		padding-block-end: var(--padding-vertical);
-		padding-inline-start: var(--padding-horizontal);
-		padding-inline-end: var(--padding-horizontal);
-		flex-grow: 1;
 	}
 
 	@media (max-width: 1680px) {

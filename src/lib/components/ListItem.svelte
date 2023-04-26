@@ -20,7 +20,9 @@
 		dispatchFocus('hover', false);
 	}
 
-	const dispatchSelect = createEventDispatcher();
+	const dispatchSelect = createEventDispatcher<{
+		select: undefined;
+	}>();
 	function onSelect() {
 		dispatchSelect('select');
 	}

@@ -1,12 +1,13 @@
 <script lang="ts">
-	import focus from './focus';
-	import palette from './palette';
-	import MemberCard from './MemberCard.svelte';
-	import ListItem from './ListItem.svelte';
 	import { equalsMemberPath, type MemberPath } from '$lib/groups/MemberPath';
+	import { createEventDispatcher } from 'svelte';
+	import type { Writable } from 'svelte/store';
+	import ListItem from './ListItem.svelte';
+	import MemberCard from './MemberCard.svelte';
 
 	export let members: readonly MemberPath[];
 	export let summarized = true;
+	export let focus: Writable<MemberPath | undefined>;
 
 	let focused: number | undefined;
 	let hovered: number | undefined;
@@ -18,19 +19,12 @@
 	}
 	$: onFocusOrHoverChange([focused, hovered]);
 
-	function onSelect(id: MemberPath) {
-		palette.update(({ members, ...rest }) => ({
-			members: toggle(members, id),
-			...rest,
-		}));
-	}
+	const dispatch = createEventDispatcher<{
+		select: MemberPath;
+	}>();
 
-	function toggle(list: MemberPath[], id: MemberPath) {
-		const index = list.findIndex((x) => equalsMemberPath(x, id));
-		if (index !== -1) {
-			return [...list.slice(0, index), ...list.slice(index + 1)];
-		}
-		return [...list, id];
+	function onSelect(id: MemberPath) {
+		dispatch('select', id);
 	}
 
 	function onFocusOrHoverChange(_deps: unknown[]) {
@@ -52,11 +46,12 @@
 		e.preventDefault();
 	}
 
-	function getStatus(id: MemberPath, focus: MemberPath | undefined) {
-		if (focus === undefined) {
+	function getStatus(id: MemberPath, _deps: unknown[]) {
+		const currentFocus = $focus;
+		if (currentFocus === undefined) {
 			return 'normal';
 		}
-		if (equalsMemberPath(focus, id)) {
+		if (equalsMemberPath(currentFocus, id)) {
 			return 'focused';
 		}
 		return 'blurred';
@@ -71,7 +66,7 @@
 	<form>
 		{#each members as id, index}
 			<ListItem
-				className={getStatus(id, $focus)}
+				className={getStatus(id, [$focus])}
 				on:focus={(e) => onFocus(index, e.detail)}
 				on:hover={(e) => onHover(index, e.detail)}
 				on:select={() => onSelect(id)}
