@@ -1,12 +1,12 @@
 <script lang="ts">
-	import LoadingButton, { type SetTask } from "$lib/components/LoadingButton.svelte";
-	import type { SubUnit } from "$lib/groups/SubUnit";
-	import encodeShareCode from "$lib/share-code/encode";
-	import type { ComponentProps } from "svelte";
+	import LoadingButton, { type SetTask } from '$lib/components/LoadingButton.svelte';
+	import type { SubUnit } from '$lib/groups/SubUnit';
+	import encodeShareCode from '$lib/share-code/encode';
+	import type { ComponentProps } from 'svelte';
 
-  type $$Props = ComponentProps<LoadingButton> & {
+	type $$Props = ComponentProps<LoadingButton> & {
 		of: typeof of;
-	}
+	};
 
 	export let of: SubUnit;
 
@@ -18,6 +18,4 @@
 	}
 </script>
 
-<LoadingButton on:click={(e) => onClick(e.detail, of)}>
-  Copy share code
-</LoadingButton>
+<LoadingButton on:click={(e) => onClick(e.detail, of)}>Copy share code</LoadingButton>
