@@ -32,8 +32,8 @@
 	class={className}
 	on:focus={onFocus}
 	on:blur={onBlur}
-	on:mouseover={onMouseOver}
-	on:mouseleave={onMouseLeave}
+	on:pointerover={onMouseOver}
+	on:pointerleave={onMouseLeave}
 	on:click={onSelect}
 >
 	<slot />
