@@ -18,4 +18,6 @@
 	}
 </script>
 
-<LoadingButton on:click={(e) => onClick(e.detail, of)}>Copy share code</LoadingButton>
+<LoadingButton enabled={of.members.length > 0} on:click={(e) => onClick(e.detail, of)}>
+	Copy share code
+</LoadingButton>

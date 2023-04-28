@@ -3,8 +3,10 @@
 </script>
 
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, type ComponentProps } from 'svelte';
 	import Button from './Button.svelte';
+
+	type $$Props = ComponentProps<Button>;
 
 	let task: Promise<void>;
 	let loader: string;
@@ -32,7 +34,7 @@
 		{/if}
 	</Button>
 {:then}
-	<Button on:click={onClick}>
+	<Button {...$$restProps} on:click={onClick}>
 		<slot />
 	</Button>
 {/await}
