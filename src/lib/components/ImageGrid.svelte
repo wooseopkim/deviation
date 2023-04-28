@@ -29,7 +29,7 @@
 
 		const remaining = [...targetMembers];
 
-		const rows = Math.round(Math.sqrt(remaining.length));
+		const rows = remaining.length < 4 ? 1 : Math.round(Math.sqrt(remaining.length));
 		const rowHeight = Math.round(gridHeight / rows);
 
 		for (let i = 0; i < rows; i++) {
@@ -38,7 +38,6 @@
 
 			for (let j = 0; j < columns; j++) {
 				const id = remaining.shift() as MemberPath;
-				const [_group, member] = id;
 				const startX = cellWidth * j;
 				const startY = bannerHeight + rowHeight * i;
 
