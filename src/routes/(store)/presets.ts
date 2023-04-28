@@ -1,15 +1,18 @@
 import type { SubUnit } from '$lib/groups/SubUnit';
-import builtInPresets from '$lib/groups/presets';
-import { derived, readable, writable, type Readable } from 'svelte/store';
+import presets from '$lib/groups/presets';
+import { derived, readable, writable } from 'svelte/store';
 
-export const customPresets = writable([] as SubUnit[]);
+export type Preset<T extends boolean = boolean> = SubUnit & {
+	id: number;
+	builtIn: T;
+};
 
-export const allPresets = derived(
-	[wrapPreset(readable(builtInPresets), true), wrapPreset(customPresets, false)],
-	(x) => x.flat()
-);
+export const customPresets = writable([] as Preset<false>[]);
 
-function wrapPreset(original: Readable<SubUnit[]>, builtIn: boolean) {
-	const mapper = (presets: SubUnit[]) => presets.map((data) => ({ builtIn, data }));
-	return derived(original, mapper);
-}
+const builtInPresets = presets.map((data) => ({
+	...data,
+	id: Math.random(),
+	builtIn: true,
+}));
+
+export const allPresets = derived([readable(builtInPresets), customPresets], (x) => x.flat());

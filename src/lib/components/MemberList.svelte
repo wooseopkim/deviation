@@ -6,7 +6,7 @@
 	import MemberCard from './MemberCard.svelte';
 
 	export let members: readonly MemberPath[];
-	export let summarized = true;
+	export let folded: boolean | undefined = undefined;
 	export let focus: Writable<MemberPath | undefined>;
 
 	let focused: number | undefined;
@@ -20,6 +20,7 @@
 	$: onFocusOrHoverChange([focused, hovered]);
 
 	const dispatch = createEventDispatcher<{
+		toggle: undefined;
 		select: MemberPath;
 	}>();
 
@@ -40,10 +41,8 @@
 	}
 
 	function onSummaryToggle(e: Event) {
-		if (summarized) {
-			return;
-		}
 		e.preventDefault();
+		dispatch('toggle');
 	}
 
 	function getStatus(id: MemberPath, _deps: unknown[]) {
@@ -58,7 +57,7 @@
 	}
 </script>
 
-<details class={summarized ? 'enabled' : 'disabled'} open={!summarized}>
+<details class={folded !== undefined ? 'enabled' : 'disabled'} open={!folded}>
 	<summary on:click={onSummaryToggle}>
 		<slot name="title" />
 	</summary>

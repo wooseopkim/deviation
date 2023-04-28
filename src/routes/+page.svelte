@@ -22,6 +22,7 @@
 	import Palette from './(components)/(sections)/Palette.svelte';
 	import PresetList from './(components)/(sections)/Presets.svelte';
 	import focus from './(store)/focus';
+	import folded from './(store)/folded';
 	import palette from './(store)/palette';
 	import { allPresets, customPresets } from './(store)/presets';
 
@@ -36,7 +37,7 @@
 	const { id, members } = groups[group];
 	const all: SubUnit<typeof group>['members'] = members.map(({ name }) => toPath(group, name));
 	const presets = derived(allPresets, (x) =>
-		x.filter(({ data }) => data.members.some(([groupId]) => groupId === id))
+		x.filter((data) => data.members.some(([groupId]) => groupId === id))
 	);
 
 	function onSelectMember(id: MemberPath) {
@@ -59,14 +60,14 @@
 <main>
 	<section>
 		<All data={all} {focus} on:select={(e) => onSelectMember(e.detail)} />
-		<PresetList data={presets} {focus} on:select={(e) => onSelectMember(e.detail)}>
-			<svelte:fragment slot="buttons" let:context={{ builtIn, data }}>
-				<AddAll data={data.members} to={palette} />
-				<Replace {data} into={palette} />
-				{#if !builtIn}
-					<Delete {data} from={customPresets} />
+		<PresetList data={presets} {focus} {folded} on:select={(e) => onSelectMember(e.detail)}>
+			<svelte:fragment slot="buttons" let:context={preset}>
+				<AddAll data={preset.members} to={palette} />
+				<Replace data={preset} into={palette} />
+				{#if !preset.builtIn}
+					<Delete data={preset} from={customPresets} />
 				{/if}
-				<CopyShareCode of={data} />
+				<CopyShareCode of={preset} />
 			</svelte:fragment>
 		</PresetList>
 	</section>

@@ -8,6 +8,6 @@
 	export let data: readonly MemberPath[];
 </script>
 
-<MemberList summarized={false} members={data} {focus} on:select>
+<MemberList members={data} {focus} on:select>
 	<SectionTitle slot="title">All members</SectionTitle>
 </MemberList>

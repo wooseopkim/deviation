@@ -7,8 +7,13 @@
 
 	function onClick() {
 		customPresets.update((value) => {
-			const preset = data;
-			return [...value, { ...preset, title: preset.title || 'Your unnamed preset' }];
+			const preset = {
+				...data,
+				id: new Date().valueOf(),
+				title: data.title || 'Your unnamed preset',
+				builtIn: false as const,
+			};
+			return [...value, preset];
 		});
 	}
 </script>

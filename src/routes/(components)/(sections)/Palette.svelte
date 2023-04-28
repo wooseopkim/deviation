@@ -11,7 +11,7 @@
 	export let data: Writable<SubUnit>;
 </script>
 
-<MemberList summarized={false} members={$data.members} {focus} on:select>
+<MemberList members={$data.members} {focus} on:select>
 	<SectionTitle
 		edit={{
 			target: createPartial(data, 'title'),

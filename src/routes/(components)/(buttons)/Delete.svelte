@@ -1,14 +1,18 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
-	import type { SubUnit } from '$lib/groups/SubUnit';
 	import type { Writable } from 'svelte/store';
+	import type { Preset } from '../../(store)/presets';
 
-	export let data: SubUnit;
-	export let from: Writable<SubUnit[]>;
+	export let data: Preset;
+	export let from: Writable<(typeof data)[]>;
 
 	function onClick() {
 		from.update((value) => {
-			const index = value.indexOf(data);
+			const index = value.findIndex(({ id }) => data.id === id);
+			if (index === -1) {
+				console.log('not found', data, value);
+				return value;
+			}
 			return [...value.slice(0, index), ...value.slice(index + 1)];
 		});
 	}
