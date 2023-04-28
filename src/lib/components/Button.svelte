@@ -27,6 +27,10 @@
 		padding-block-end: var(--padding-vertical);
 	}
 
+	button:hover {
+		background-color: rgba(0, 0, 0, 0.7);
+	}
+
 	button:disabled {
 		opacity: 0.3;
 		cursor: default;

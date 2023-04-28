@@ -1,13 +1,14 @@
 <script lang="ts">
+	import GroupSelector from '$lib/components/GroupSelector.svelte';
 	import SectionTitle from '$lib/components/SectionTitle.svelte';
-	import groups, { toPath } from '$lib/groups';
+	import groups, { toPath, type Group } from '$lib/groups';
 	import { equalsMemberPath, type MemberPath } from '$lib/groups/MemberPath';
 	import type { SubUnit } from '$lib/groups/SubUnit';
 	import decodeShareCode from '$lib/share-code/decode';
 	import encodeShareCode from '$lib/share-code/encode';
 	import registerLocalStorage from '$lib/store/local-storage';
 	import registerQuery from '$lib/store/query';
-	import { derived } from 'svelte/store';
+	import { derived, readable, writable, type Readable } from 'svelte/store';
 	import AddAll from './(components)/(buttons)/AddAll.svelte';
 	import ClearMembers from './(components)/(buttons)/ClearMembers.svelte';
 	import ClearTitle from './(components)/(buttons)/ClearTitle.svelte';
@@ -24,7 +25,9 @@
 	import focus from './(store)/focus';
 	import folded from './(store)/folded';
 	import palette from './(store)/palette';
-	import { allPresets, customPresets } from './(store)/presets';
+	import { allPresets, customPresets, type Preset } from './(store)/presets';
+
+	const group = writable<Group | undefined>();
 
 	registerLocalStorage(palette, 'palette');
 	registerQuery(palette, 'palette', {
@@ -32,13 +35,21 @@
 		decode: decodeShareCode,
 	});
 	registerLocalStorage(customPresets, 'customPresets');
+	registerLocalStorage(group, 'group');
+	initializeGroup($palette);
 
-	const group = 'tripleS';
-	const { id, members } = groups[group];
-	const all: SubUnit<typeof group>['members'] = members.map(({ name }) => toPath(group, name));
-	const presets = derived(allPresets, (x) =>
-		x.filter((data) => data.members.some(([groupId]) => groupId === id))
-	);
+	let all: SubUnit['members'] = [];
+	let presets: Readable<Preset[]> = readable([]);
+	$: ((group: Group | undefined) => {
+		if (group === undefined) {
+			return;
+		}
+		let { id, members } = groups[group];
+		all = members.map(({ name }) => toPath(group, name));
+		presets = derived(allPresets, (x) =>
+			x.filter((data) => data.members.some(([groupId]) => groupId === id))
+		);
+	})($group);
 
 	function onSelectMember(id: MemberPath) {
 		palette.update((value) => ({
@@ -54,11 +65,27 @@
 		}
 		return [...list, id];
 	}
+
+	function initializeGroup({ members }: SubUnit) {
+		const firstMember = members[0];
+		if (firstMember === undefined) {
+			return;
+		}
+		const hasTheMember = equalsMemberPath.bind(undefined, firstMember);
+		const result = Object.entries(groups).find(([group, { members }]) => {
+			return members.map((x) => toPath(group as Group, x.name)).some(hasTheMember);
+		});
+		if (result === undefined) {
+			return;
+		}
+		group.set(result[0] as Group);
+	}
 </script>
 
 <h1><super>https://</super><span><strong>deviation</strong><span>.by.wooseop.kim</span></span></h1>
 <main>
 	<section>
+		<GroupSelector data={groups} target={group} />
 		<All data={all} {focus} on:select={(e) => onSelectMember(e.detail)} />
 		<PresetList data={presets} {focus} {folded} on:select={(e) => onSelectMember(e.detail)}>
 			<svelte:fragment slot="buttons" let:context={preset}>

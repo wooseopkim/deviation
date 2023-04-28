@@ -10,7 +10,9 @@
 </script>
 
 <figure>
-	<figcaption style:background-color={member.color}><div>{member.name}</div></figcaption>
+	<figcaption style:background-color={member.color ?? 'grey'}>
+		<div>{member.name}</div>
+	</figcaption>
 	<picture>
 		{#if member.videoId !== undefined}
 			<img
