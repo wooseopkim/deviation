@@ -27,7 +27,7 @@
 	import palette from './(store)/palette';
 	import { allPresets, customPresets, type Preset } from './(store)/presets';
 
-	const group = writable<Group | undefined>();
+	const group = writable<Group | undefined>('tripleS');
 
 	registerLocalStorage(palette, 'palette');
 	registerQuery(palette, 'palette', {
