@@ -20,6 +20,32 @@ const presets: SubUnit[] = [
 			toPath('tripleS', 'JiWoo'),
 		],
 	},
+	{
+		title: 'EVOLution',
+		members: [
+			toPath('tripleS', 'YooYeon'),
+			toPath('tripleS', 'ChaeYeon'),
+			toPath('tripleS', 'NaKyoung'),
+			toPath('tripleS', 'JiWoo'),
+			toPath('tripleS', 'Kotone'),
+			toPath('tripleS', 'SooMin'),
+			toPath('tripleS', 'YeonJi'),
+			toPath('tripleS', 'S15'),
+		],
+	},
+	{
+		title: 'LOVElution',
+		members: [
+			toPath('tripleS', 'YuBin'),
+			toPath('tripleS', 'SeoYeon'),
+			toPath('tripleS', 'Kaede'),
+			toPath('tripleS', 'DaHyun'),
+			toPath('tripleS', 'SoHyun'),
+			toPath('tripleS', 'HyeRin'),
+			toPath('tripleS', 'Nien'),
+			toPath('tripleS', 'S16'),
+		],
+	},
 ];
 
 export default presets;
