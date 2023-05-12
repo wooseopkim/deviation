@@ -7,4 +7,4 @@ if (browser && !dev) {
 	});
 }
 
-export const prerender = !dev;
+export const ssr = true;
