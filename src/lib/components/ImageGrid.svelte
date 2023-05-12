@@ -102,4 +102,11 @@
 	}
 </script>
 
+<svelte:head>
+	<meta property="og:title" content={'DEVIATION' + (title.length > 0 ? ` ${title}` : '')} />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content={location.href} />
+	<meta property="og:image" content={canvas?.toDataURL()} />
+</svelte:head>
+
 <canvas width={canvasWidth} height={canvasHeight} bind:this={canvas} />
