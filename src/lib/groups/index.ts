@@ -7,7 +7,7 @@ import tripleS from './tripleS';
 
 const groups = {
 	tripleS,
-	loona,
+	LOONA: loona,
 } as const;
 
 export type Group = keyof typeof groups;

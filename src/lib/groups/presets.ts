@@ -46,6 +46,32 @@ const presets: SubUnit[] = [
 			toPath('tripleS', 'S16'),
 		],
 	},
+	{
+		title: '1/3',
+		members: [
+			toPath('LOONA', 'HeeJin'),
+			toPath('LOONA', 'HyunJin'),
+			toPath('LOONA', 'HaSeul'),
+			toPath('LOONA', 'ViVi'),
+		],
+	},
+	{
+		title: 'ODD EYE CIRCLE',
+		members: [
+			toPath('LOONA', 'Kim Lip'),
+			toPath('LOONA', 'JinSoul'),
+			toPath('LOONA', 'Choerry'),
+		],
+	},
+	{
+		title: 'yyxy',
+		members: [
+			toPath('LOONA', 'Yves'),
+			toPath('LOONA', 'Chuu'),
+			toPath('LOONA', 'Go Won'),
+			toPath('LOONA', 'Olivia Hye'),
+		],
+	}
 ];
 
 export default presets;
