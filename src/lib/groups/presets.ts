@@ -57,11 +57,7 @@ const presets: SubUnit[] = [
 	},
 	{
 		title: 'ODD EYE CIRCLE',
-		members: [
-			toPath('LOONA', 'Kim Lip'),
-			toPath('LOONA', 'JinSoul'),
-			toPath('LOONA', 'Choerry'),
-		],
+		members: [toPath('LOONA', 'Kim Lip'), toPath('LOONA', 'JinSoul'), toPath('LOONA', 'Choerry')],
 	},
 	{
 		title: 'yyxy',
@@ -71,7 +67,7 @@ const presets: SubUnit[] = [
 			toPath('LOONA', 'Go Won'),
 			toPath('LOONA', 'Olivia Hye'),
 		],
-	}
+	},
 ];
 
 export default presets;

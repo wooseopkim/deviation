@@ -8,7 +8,7 @@
 
 <SectionTitle>Image</SectionTitle>
 <div class="grid-wrapper">
-	<ImageGrid title={data.title} members={data.members} />
+	<ImageGrid {data} />
 </div>
 
 <style>
