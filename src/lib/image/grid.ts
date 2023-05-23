@@ -126,7 +126,9 @@ export async function renderGrid(
 
 async function newImage() {
 	if (browser) {
-		return new Image();
+		const img = new Image();
+		img.referrerPolicy = 'no-referrer';
+		return img;
 	}
 	const { Image: NodeImage } = await import('canvas');
 	return new NodeImage();

@@ -19,6 +19,7 @@
 				class="profile"
 				alt={`profile, ${member.name}`}
 				src={getThumbnail(member.videoId, 'medium')}
+				referrerpolicy="no-referrer"
 			/>
 		{:else}
 			<div class="profile placeholder">TBD</div>
