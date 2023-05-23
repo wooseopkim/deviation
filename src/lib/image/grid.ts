@@ -37,8 +37,8 @@ export async function renderGrid(
 	}
 
 	const fontFamily = browser
-		? getComputedStyle(document.body).fontFamily.split(',')?.[0] ?? 'sans-serif'
-		: 'Archivo Black';
+		? getComputedStyle(document.body).fontFamily
+		: 'Archivo Black, sans-serif';
 	ctx.font = `${fontUnit}px ${fontFamily}`;
 
 	const bannerHeight = hideHeader ? 0 : fontUnit * 2;
