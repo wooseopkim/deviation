@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
+	import { APP_NAME } from '$lib/constants';
 
 	let openGraph: {
 		title: string;
@@ -10,6 +11,8 @@
 </script>
 
 <svelte:head>
+	<title>{APP_NAME.toUpperCase()}</title>
+
 	<link rel="stylesheet" href="https://unpkg.com/normalize.css/normalize.css" />
 	<link
 		rel="stylesheet"

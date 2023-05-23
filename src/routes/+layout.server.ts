@@ -1,3 +1,4 @@
+import { APP_NAME } from '$lib/constants.js';
 import decodeShareCode from '$lib/share-code/decode.js';
 
 export async function load({ url }) {
@@ -16,7 +17,7 @@ export async function load({ url }) {
 	const { title } = palette;
 	const suffix = title.length > 0 ? `/${title}` : '';
 
-	openGraph.title = 'DEVIATION' + suffix;
+	openGraph.title = APP_NAME.toUpperCase() + suffix;
 	openGraph.image = `${url.origin}/${code}.jpg`;
 
 	return openGraph;
