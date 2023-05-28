@@ -1,0 +1,18 @@
+import fs from 'fs';
+import path from 'path';
+
+export default async function locateFile(root: string, subpath: string): Promise<string> {
+	const [upmost, ...rest] = path.normalize(subpath).split(path.sep).filter(Boolean);
+	const ps = fs.readdirSync(root).map((x) => {
+		const current = path.resolve(root, x);
+		if (x === upmost && rest.length === 0) {
+			return Promise.resolve(current);
+		}
+		if (fs.statSync(current).isDirectory()) {
+			const p = x === upmost ? rest.join(path.sep) : subpath;
+			return locateFile(current, p);
+		}
+		return Promise.reject();
+	});
+	return Promise.any(ps).catch(() => Promise.reject(new Error('not found')));
+}
