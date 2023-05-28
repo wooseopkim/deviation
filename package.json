@@ -40,7 +40,9 @@
 		"canvas": "^2.11.2",
 		"posthog-js": "^1.53.4"
 	},
-  "lint-staged": {
-    "**/*.{js,jsx,ts,tsx,svelte}": ["npm run check && npm run format"]
-  }
+	"lint-staged": {
+		"**/*.{js,jsx,ts,tsx,svelte}": [
+			"npm run check && npm run format"
+		]
+	}
 }

@@ -2,7 +2,16 @@
 	export let enabled = true;
 </script>
 
-<button disabled={!enabled} on:click on:mouseover on:mouseout on:touchstart on:touchend on:focus on:blur>
+<button
+	disabled={!enabled}
+	on:click
+	on:mouseover
+	on:mouseout
+	on:touchstart
+	on:touchend
+	on:focus
+	on:blur
+>
 	<slot />
 </button>
 
@@ -19,7 +28,8 @@
 		padding-block-end: var(--padding-vertical);
 	}
 
-	button:hover, button:focus {
+	button:hover,
+	button:focus {
 		background-color: rgba(0, 0, 0, 0.7);
 	}
 
