@@ -38,7 +38,7 @@
 	"type": "module",
 	"dependencies": {
 		"canvas": "^2.11.2",
-		"posthog-js": "^1.53.4"
+		"posthog-js": "^1.57.2"
 	},
 	"lint-staged": {
 		"**/*.{js,jsx,ts,tsx,svelte}": [
