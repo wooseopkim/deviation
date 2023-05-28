@@ -1,6 +1,7 @@
 <script lang="ts">
-	import type groups from '$lib/groups';
 	import type { Group } from '$lib/groups';
+	import groups from '$lib/groups';
+	import { getThumbnail } from '$lib/thumbnail';
 	import type { Writable } from 'svelte/store';
 	import Button from './Button.svelte';
 
@@ -17,13 +18,45 @@
 		}
 		return '';
 	}
+
+	function startPreloading(key: string) {
+		if ($target === key) {
+			return;
+		}
+		const videoIds = groups[key as Group].members
+			.map(({ videoId }) => videoId ?? '')
+			.filter(Boolean);
+		for (const videoId of videoIds) {
+			const link = document.createElement('link');
+			link.rel = 'preload';
+			link.href = getThumbnail(videoId);
+			link.as = 'image';
+			link.dataset['key'] = key;
+			document.head.appendChild(link);
+		}
+	}
+
+	function cancelPreloading(key: string) {
+		const links = document.head.querySelectorAll(`[data-key="${key}"]`);
+		for (const link of links) {
+			link.remove();
+		}
+	}
 </script>
 
 <nav>
 	<ul>
 		{#each Object.entries(data) as [key]}
 			<li class={getStatus(key, [$target])}>
-				<Button on:click={() => onClick(key)}>
+				<Button
+					on:click={() => onClick(key)}
+					on:mouseover={() => startPreloading(key)}
+					on:mouseout={() => cancelPreloading(key)}
+					on:touchstart={() => startPreloading(key)}
+					on:touchend={() => cancelPreloading(key)}
+					on:focus={() => startPreloading(key)}
+					on:blur={() => cancelPreloading(key)}
+				>
 					{key}
 				</Button>
 			</li>
