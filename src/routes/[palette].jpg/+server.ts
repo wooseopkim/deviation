@@ -1,10 +1,9 @@
+import archivoBlack from '$lib/assets/fonts/ArchivoBlack-Regular.ttf';
 import { renderGrid } from '$lib/image/grid.js';
 import decodeShareCode from '$lib/share-code/decode.js';
 import { createCanvas, registerFont } from 'canvas';
 
-registerFont('static/fonts/ArchivoBlack-Regular.ttf', {
-	family: 'Archivo Black',
-});
+let initialized = false;
 
 export async function GET({ request, params, url }) {
 	const code = params.palette;
@@ -33,6 +32,13 @@ export async function GET({ request, params, url }) {
 		return new Response('Invalid code', {
 			status: 400,
 		});
+	}
+
+	if (!initialized) {
+		registerFont(archivoBlack, {
+			family: 'Archivo Black',
+		});
+		initialized = true;
 	}
 
 	const palette = decodeShareCode(code);
