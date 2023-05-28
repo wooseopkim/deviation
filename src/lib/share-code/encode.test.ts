@@ -49,4 +49,19 @@ describe(encodeShareCode.name, () => {
 
 		expect(unit).toStrictEqual(retrieved);
 	});
+
+	it('handles unicode string', () => {
+		const unit: SubUnit = {
+			title: '빛이 있으라',
+			members: [
+				['L', '1'],
+				['S', 'a'],
+			],
+		};
+
+		const code = encodeShareCode(unit);
+		const retrieved = decodeShareCode(code);
+
+		expect(unit).toStrictEqual(retrieved);
+	});
 });
