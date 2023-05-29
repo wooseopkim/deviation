@@ -5,7 +5,6 @@ export default async function locateFile(root: string, subpath: string): Promise
 	const [upmost, ...rest] = path.normalize(subpath).split(path.sep).filter(Boolean);
 	const ps = fs.readdirSync(root).map((x) => {
 		const current = path.resolve(root, x);
-    console.debug('inspecting', current);
 		if (x === upmost && rest.length === 0) {
 			return Promise.resolve(current);
 		}
