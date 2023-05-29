@@ -36,12 +36,13 @@ export async function GET({ request, params, url }) {
 	}
 
 	if (!initialized) {
-		console.debug(process.cwd(), process.env);
-		const fontPath = await locateFile(process.cwd(), archivoBlack);
-		registerFont(fontPath, {
-			family: 'Archivo Black',
-		});
-		initialized = true;
+		try {
+			const fontPath = await locateFile(process.cwd(), archivoBlack);
+			registerFont(fontPath, { family: 'Archivo Black' });
+			initialized = true;
+		} catch (e) {
+			console.warn(e);
+		}
 	}
 
 	const palette = decodeShareCode(code);

@@ -16,10 +16,12 @@ describe(locateFile.name, () => {
   
   it('should reject when root does not contain path', async () => {
     const filename = fileURLToPath(import.meta.url);
+    const root = dirname(filename);
+    const subpath = 'this file does not exist';
 
-    const p = locateFile(dirname(filename), 'this file does not exist');
+    const p = locateFile(root, subpath);
 
-    expect(p).rejects.toEqual(new Error('not found'));
+    expect(p).rejects.toEqual(new Error(`Couldn't locate <${subpath}> in <${root}>`));
   });
   
   it('should locate indirectly contained path', async () => {
