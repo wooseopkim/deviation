@@ -64,14 +64,16 @@
 	<slot name="toolbar" />
 	<form>
 		{#each members as id, index}
-			<ListItem
-				className={getStatus(id, [$focus])}
-				on:focus={(e) => onFocus(index, e.detail)}
-				on:hover={(e) => onHover(index, e.detail)}
-				on:select={() => onSelect(id)}
-			>
-				<MemberCard {id} />
-			</ListItem>
+			{#key id.join('')}
+				<ListItem
+					className={getStatus(id, [$focus])}
+					on:focus={(e) => onFocus(index, e.detail)}
+					on:hover={(e) => onHover(index, e.detail)}
+					on:select={() => onSelect(id)}
+				>
+					<MemberCard {id} />
+				</ListItem>
+			{/key}
 		{/each}
 	</form>
 </details>
