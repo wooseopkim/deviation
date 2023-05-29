@@ -14,8 +14,9 @@ export default async function locateFile(root: string, subpath: string): Promise
 		}
 		return Promise.reject();
 	});
-	return Promise.any(ps).catch((e) => {
-    console.warn(e);
-    return Promise.reject(new Error(`Couldn't locate <${subpath}> in <${root}>`));
+	return Promise.any(ps).catch(() => {
+    const message = `Couldn't locate <${subpath}> in <${root}>`;
+    const error = new Error(message);
+    return Promise.reject(error);
   });
 }
