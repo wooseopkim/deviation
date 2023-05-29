@@ -18,6 +18,10 @@
 		rel="stylesheet"
 		href="https://cdn.jsdelivr.net/npm/@fontsource/archivo-black/400.min.css"
 	/>
+	<link
+		rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/@fontsource/black-han-sans/400.min.css"
+	/>
 
 	{#if !browser}
 		<meta property="og:title" content={openGraph.title} />
@@ -33,7 +37,7 @@
 
 <style>
 	:root {
-		font-family: 'Archivo Black', sans-serif;
+		font-family: 'Archivo Black', 'Black Han Sans', sans-serif;
 		background-color: #fefefe;
 		color: #202020;
 	}

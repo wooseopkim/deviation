@@ -1,10 +1,9 @@
 import archivoBlack from '$lib/assets/fonts/ArchivoBlack-Regular.ttf';
+import blackHanSans from '$lib/assets/fonts/BlackHanSans-Regular.ttf';
 import { renderGrid } from '$lib/image/grid.js';
 import locateFile from '$lib/locateFile.js';
 import decodeShareCode from '$lib/share-code/decode.js';
 import { createCanvas, registerFont } from 'canvas';
-
-let initialized = false;
 
 export async function GET({ request, params, url }) {
 	const code = params.palette;
@@ -35,19 +34,16 @@ export async function GET({ request, params, url }) {
 		});
 	}
 
-	if (!initialized) {
-		try {
-			const fontPath = await locateFile(process.cwd(), archivoBlack);
-			registerFont(fontPath, { family: 'Archivo Black' });
-			initialized = true;
-		} catch (e) {
-			console.warn(e);
-		}
+	try {
+		await registerFonts();
+	} catch (e) {
+		console.warn(e);
 	}
 
 	const palette = decodeShareCode(code);
 	const canvas = createCanvas(512, 512);
-	await renderGrid(canvas, palette, { hideFooter: true, hideImage: true });
+	const fontFamily = [...fontsRegistered.keys(), 'sans-serif'].join(', ');
+	await renderGrid(canvas, palette, { hideFooter: true, hideImage: true, fontFamily });
 	const buffer = canvas.toBuffer('image/jpeg', {
 		quality: 0.85,
 		progressive: true,
@@ -60,4 +56,20 @@ export async function GET({ request, params, url }) {
 			ETag: code,
 		},
 	});
+}
+
+const fontsRegistered = new Map<string, string>();
+async function registerFonts() {
+	const fonts = [
+		['Archivo Black', archivoBlack],
+		['Black Han Sans', blackHanSans],
+	] as const;
+	for (const [family, path] of fonts) {
+		if (fontsRegistered.has(family)) {
+			continue;
+		}
+		const actualPath = await locateFile(process.cwd(), path);
+		registerFont(actualPath, { family });
+		fontsRegistered.set(family, actualPath);
+	}
 }

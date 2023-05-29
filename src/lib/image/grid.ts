@@ -16,6 +16,7 @@ type Options = {
 	hideNames: boolean;
 	hideFooter: boolean;
 	hideImage: boolean;
+	fontFamily: string;
 };
 
 export async function renderGrid(
@@ -26,6 +27,7 @@ export async function renderGrid(
 		hideNames = false,
 		hideFooter = false,
 		hideImage = false,
+		fontFamily = getComputedStyle(document.body).fontFamily,
 	}: Partial<Options> = {}
 ) {
 	if (canvas === undefined) {
@@ -36,9 +38,6 @@ export async function renderGrid(
 		return;
 	}
 
-	const fontFamily = browser
-		? getComputedStyle(document.body).fontFamily
-		: 'Archivo Black, sans-serif';
 	ctx.font = `${fontUnit}px ${fontFamily}`;
 
 	const bannerHeight = hideHeader ? 0 : fontUnit * 2;
