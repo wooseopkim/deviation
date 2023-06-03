@@ -7,10 +7,7 @@ type ObjectSpec<T, P> = {
 };
 type Spec<T, P> = KeySpec<T> | ObjectSpec<T, P>;
 
-function createPartial<T, K extends KeySpec<T>>(
-	original: Writable<T>,
-	key: K
-): Writable<T[K]>;
+function createPartial<T, K extends KeySpec<T>>(original: Writable<T>, key: K): Writable<T[K]>;
 function createPartial<T, P>(original: Writable<T>, spec: ObjectSpec<T, P>): Writable<P>;
 function createPartial<T, P>(original: Writable<T>, spec: Spec<T, P>): Writable<P> {
 	const { read, update: write } = parseSpec<T, P>(spec);

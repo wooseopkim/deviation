@@ -25,7 +25,7 @@ module.exports = {
 		},
 		'import/resolver': {
 			typescript: {
-        project: ['./.svelte-kit/tsconfig.json'],
+				project: ['./.svelte-kit/tsconfig.json'],
 			},
 			node: true,
 		},
@@ -49,13 +49,19 @@ module.exports = {
 				varsIgnorePattern: '^(_|\\$\\$Props$)',
 			},
 		],
-		'import/order': ['error', {
-			alphabetize: {
-				order: 'asc',
+		'import/order': [
+			'error',
+			{
+				alphabetize: {
+					order: 'asc',
+				},
 			},
-		}],
-		'import/no-unresolved': ['error', {
-			ignore: ['^\\$app/.+', '^\\$service-worker$'],
-		}],
+		],
+		'import/no-unresolved': [
+			'error',
+			{
+				ignore: ['^\\$app/.+', '^\\$service-worker$'],
+			},
+		],
 	},
 };
