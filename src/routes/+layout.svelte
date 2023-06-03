@@ -1,6 +1,10 @@
 <script lang="ts">
+	import 'modern-normalize';
+// this comment ensures modern-normalize to get loaded first
 	import { browser } from '$app/environment';
 	import { APP_NAME } from '$lib/constants';
+	import '@fontsource/archivo-black';
+	import '@fontsource/black-han-sans';
 
 	let openGraph: {
 		title: string;
@@ -12,16 +16,6 @@
 
 <svelte:head>
 	<title>{APP_NAME.toUpperCase()}</title>
-
-	<link rel="stylesheet" href="https://unpkg.com/normalize.css/normalize.css" />
-	<link
-		rel="stylesheet"
-		href="https://cdn.jsdelivr.net/npm/@fontsource/archivo-black/400.min.css"
-	/>
-	<link
-		rel="stylesheet"
-		href="https://cdn.jsdelivr.net/npm/@fontsource/black-han-sans/400.min.css"
-	/>
 
 	{#if !browser}
 		<meta property="og:title" content={openGraph.title} />

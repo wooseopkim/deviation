@@ -15,6 +15,8 @@
 		"format": "prettier --plugin-search-dir . --write ."
 	},
 	"devDependencies": {
+		"@fontsource/archivo-black": "^5.0.2",
+		"@fontsource/black-han-sans": "^5.0.2",
 		"@playwright/test": "^1.28.1",
 		"@sveltejs/adapter-netlify": "^2.0.7",
 		"@sveltejs/adapter-static": "^2.0.2",
@@ -26,6 +28,7 @@
 		"eslint-plugin-svelte3": "^4.0.0",
 		"husky": "^8.0.3",
 		"lint-staged": "^13.2.2",
+		"modern-normalize": "^2.0.0",
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.8.1",
 		"svelte": "^3.54.0",
