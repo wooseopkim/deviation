@@ -1,5 +1,5 @@
-import type { MemberPath } from '$lib/groups/MemberPath';
 import type { SubUnit } from '../groups/SubUnit';
+import type { MemberPath } from '$lib/groups/MemberPath';
 
 export default function decodeShareCode(encoded: string): SubUnit {
 	const base64url = encoded;

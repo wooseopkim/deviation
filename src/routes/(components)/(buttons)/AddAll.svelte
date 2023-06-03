@@ -1,8 +1,8 @@
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
-	import { equalsMemberPath, type MemberPath } from '$lib/groups/MemberPath';
-	import type { SubUnit } from '$lib/groups/SubUnit';
 	import type { Writable } from 'svelte/store';
+	import Button from '$lib/components/Button.svelte';
+	import { type MemberPath, equalsMemberPath } from '$lib/groups/MemberPath';
+	import type { SubUnit } from '$lib/groups/SubUnit';
 
 	export let data: MemberPath[];
 	export let to: Writable<SubUnit>;

@@ -1,6 +1,6 @@
-import { browser } from '$app/environment';
 import { onDestroy } from 'svelte';
 import type { Writable } from 'svelte/store';
+import { browser } from '$app/environment';
 
 export default function registerLocalStorage<T, K extends string = string>(
 	variable: Writable<T>,

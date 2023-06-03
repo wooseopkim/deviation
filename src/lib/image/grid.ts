@@ -1,13 +1,13 @@
-import { browser } from '$app/environment';
-import { getMember } from '$lib/groups';
-import type { MemberPath } from '$lib/groups/MemberPath';
-import type { SubUnit } from '$lib/groups/SubUnit';
-import { getThumbnail } from '$lib/thumbnail';
 import type {
 	Canvas as NodeCanvas,
 	CanvasRenderingContext2D as NodeCanvasRenderingContext2D,
 	Image as NodeImage,
 } from 'canvas';
+import { browser } from '$app/environment';
+import { getMember } from '$lib/groups';
+import type { MemberPath } from '$lib/groups/MemberPath';
+import type { SubUnit } from '$lib/groups/SubUnit';
+import { getThumbnail } from '$lib/thumbnail';
 
 const fontUnit = 32;
 

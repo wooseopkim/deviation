@@ -1,10 +1,10 @@
 <script lang="ts">
+	import type { Readable, Writable } from 'svelte/store';
+	import type { Preset } from '../../(store)/presets';
 	import MemberList from '$lib/components/MemberList.svelte';
 	import SectionTitle from '$lib/components/SectionTitle.svelte';
 	import Toolbar from '$lib/components/Toolbar.svelte';
 	import type { MemberPath } from '$lib/groups/MemberPath';
-	import type { Readable, Writable } from 'svelte/store';
-	import type { Preset } from '../../(store)/presets';
 
 	export let focus: Writable<MemberPath | undefined>;
 	export let data: Readable<Preset[]>;

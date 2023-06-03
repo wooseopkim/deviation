@@ -1,9 +1,9 @@
+import { createCanvas, registerFont } from 'canvas';
 import archivoBlack from '$lib/assets/fonts/ArchivoBlack-Regular.ttf';
 import blackHanSans from '$lib/assets/fonts/BlackHanSans-Regular.ttf';
 import { renderGrid } from '$lib/image/grid.js';
 import locateFile from '$lib/locateFile.js';
 import decodeShareCode from '$lib/share-code/decode.js';
-import { createCanvas, registerFont } from 'canvas';
 
 export async function GET({ request, params, url }) {
 	const code = params.palette;

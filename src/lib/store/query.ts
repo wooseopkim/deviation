@@ -1,12 +1,12 @@
+import type { Page } from '@sveltejs/kit';
+import { onDestroy } from 'svelte';
+import { type Writable, derived, get } from 'svelte/store';
 import { browser } from '$app/environment';
 import { goto } from '$app/navigation';
 import { page } from '$app/stores';
-import type { Page } from '@sveltejs/kit';
-import { onDestroy } from 'svelte';
-import { derived, get, type Writable } from 'svelte/store';
 
-export function registerQuery<K extends string = string>(variable: Writable<string>, key: K): void;
-export function registerQuery<T extends object, K extends string>(
+function registerQuery<K extends string = string>(variable: Writable<string>, key: K): void;
+function registerQuery<T extends object, K extends string>(
 	variable: Writable<T>,
 	key: K,
 	transformer: {
@@ -14,7 +14,7 @@ export function registerQuery<T extends object, K extends string>(
 		decode: (value: string) => T;
 	}
 ): void;
-export default function registerQuery<T, K extends string = string>(
+function registerQuery<T, K extends string = string>(
 	variable: Writable<T>,
 	key: K,
 	transformer: {
@@ -55,3 +55,5 @@ export default function registerQuery<T, K extends string = string>(
 	);
 	onDestroy(unsubscribe);
 }
+
+export default registerQuery;

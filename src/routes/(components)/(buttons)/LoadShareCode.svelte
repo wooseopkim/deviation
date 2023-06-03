@@ -1,8 +1,8 @@
 <script lang="ts">
+	import type { Writable } from 'svelte/store';
 	import Button from '$lib/components/Button.svelte';
 	import type { SubUnit } from '$lib/groups/SubUnit';
 	import decodeShareCode from '$lib/share-code/decode';
-	import type { Writable } from 'svelte/store';
 
 	export let into: Writable<SubUnit>;
 

@@ -1,9 +1,9 @@
 <script lang="ts">
+	import type { Writable } from 'svelte/store';
+	import Button from './Button.svelte';
 	import type { Group } from '$lib/groups';
 	import groups from '$lib/groups';
 	import { getThumbnail } from '$lib/thumbnail';
-	import type { Writable } from 'svelte/store';
-	import Button from './Button.svelte';
 
 	export let data: typeof groups;
 	export let target: Writable<Group | undefined>;

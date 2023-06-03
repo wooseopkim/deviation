@@ -1,5 +1,5 @@
+import { posthog } from 'posthog-js';
 import { browser, dev } from '$app/environment';
-import posthog from 'posthog-js';
 
 if (browser && !dev) {
 	posthog.init('phc_IaK96dVLTQYy3rsouvrEb9LcT59EpIkqmMhwK7dwouO', {

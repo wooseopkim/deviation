@@ -1,14 +1,5 @@
 <script lang="ts">
-	import GroupSelector from '$lib/components/GroupSelector.svelte';
-	import SectionTitle from '$lib/components/SectionTitle.svelte';
-	import groups, { toPath, type Group } from '$lib/groups';
-	import { equalsMemberPath, type MemberPath } from '$lib/groups/MemberPath';
-	import type { SubUnit } from '$lib/groups/SubUnit';
-	import decodeShareCode from '$lib/share-code/decode';
-	import encodeShareCode from '$lib/share-code/encode';
-	import registerLocalStorage from '$lib/store/local-storage';
-	import registerQuery from '$lib/store/query';
-	import { derived, readable, writable, type Readable } from 'svelte/store';
+	import { type Readable, derived, readable, writable } from 'svelte/store';
 	import AddAll from './(components)/(buttons)/AddAll.svelte';
 	import ClearMembers from './(components)/(buttons)/ClearMembers.svelte';
 	import ClearTitle from './(components)/(buttons)/ClearTitle.svelte';
@@ -25,7 +16,16 @@
 	import focus from './(store)/focus';
 	import folded from './(store)/folded';
 	import palette from './(store)/palette';
-	import { allPresets, customPresets, type Preset } from './(store)/presets';
+	import { type Preset, allPresets, customPresets } from './(store)/presets';
+	import GroupSelector from '$lib/components/GroupSelector.svelte';
+	import SectionTitle from '$lib/components/SectionTitle.svelte';
+	import groups, { type Group, toPath } from '$lib/groups';
+	import { type MemberPath, equalsMemberPath } from '$lib/groups/MemberPath';
+	import type { SubUnit } from '$lib/groups/SubUnit';
+	import decodeShareCode from '$lib/share-code/decode';
+	import encodeShareCode from '$lib/share-code/encode';
+	import registerLocalStorage from '$lib/store/local-storage';
+	import registerQuery from '$lib/store/query';
 
 	const group = writable<Group | undefined>('tripleS');
 

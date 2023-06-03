@@ -1,8 +1,7 @@
 <script lang="ts">
-	import 'modern-normalize';
-// this comment ensures modern-normalize to get loaded first
 	import { browser } from '$app/environment';
 	import { APP_NAME } from '$lib/constants';
+	import 'modern-normalize';
 	import '@fontsource/archivo-black';
 	import '@fontsource/black-han-sans';
 

@@ -3,7 +3,7 @@
 </script>
 
 <script lang="ts">
-	import { createEventDispatcher, type ComponentProps } from 'svelte';
+	import { type ComponentProps, createEventDispatcher } from 'svelte';
 	import Button from './Button.svelte';
 
 	type $$Props = ComponentProps<Button>;

@@ -1,4 +1,4 @@
-import { derived, type Writable } from 'svelte/store';
+import { type Writable, derived } from 'svelte/store';
 
 type KeySpec<T> = keyof T;
 type ObjectSpec<T, P> = {
@@ -7,12 +7,12 @@ type ObjectSpec<T, P> = {
 };
 type Spec<T, P> = KeySpec<T> | ObjectSpec<T, P>;
 
-export function createPartial<T, K extends KeySpec<T>>(
+function createPartial<T, K extends KeySpec<T>>(
 	original: Writable<T>,
 	key: K
 ): Writable<T[K]>;
-export function createPartial<T, P>(original: Writable<T>, spec: ObjectSpec<T, P>): Writable<P>;
-export default function createPartial<T, P>(original: Writable<T>, spec: Spec<T, P>): Writable<P> {
+function createPartial<T, P>(original: Writable<T>, spec: ObjectSpec<T, P>): Writable<P>;
+function createPartial<T, P>(original: Writable<T>, spec: Spec<T, P>): Writable<P> {
 	const { read, update: write } = parseSpec<T, P>(spec);
 
 	const partial = derived(original, read);
@@ -45,3 +45,5 @@ function parseSpec<T, P>(spec: Readonly<Spec<T, P>>): ObjectSpec<T, P> {
 		}),
 	} as ObjectSpec<T, P>;
 }
+
+export default createPartial;

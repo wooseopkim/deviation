@@ -1,6 +1,6 @@
+import { derived, readable, writable } from 'svelte/store';
 import type { SubUnit } from '$lib/groups/SubUnit';
 import presets from '$lib/groups/presets';
-import { derived, readable, writable } from 'svelte/store';
 
 export type Preset<T extends boolean = boolean> = SubUnit & {
 	id: number;

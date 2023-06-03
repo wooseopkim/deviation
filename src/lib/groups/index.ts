@@ -1,9 +1,9 @@
-import memoized from '$lib/memoize';
 import type { Id } from './Id';
 import type { Member } from './Member';
 import type { MemberPath } from './MemberPath';
 import loona from './loona';
 import tripleS from './tripleS';
+import memoized from '$lib/memoize';
 
 const groups = {
 	tripleS,

@@ -1,7 +1,7 @@
 <script lang="ts">
+	import { customPresets } from '../../(store)/presets';
 	import Button from '$lib/components/Button.svelte';
 	import type { SubUnit } from '$lib/groups/SubUnit';
-	import { customPresets } from '../../(store)/presets';
 
 	export let data: SubUnit;
 

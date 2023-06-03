@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { equalsMemberPath, type MemberPath } from '$lib/groups/MemberPath';
 	import { createEventDispatcher } from 'svelte';
 	import type { Writable } from 'svelte/store';
 	import ListItem from './ListItem.svelte';
 	import MemberCard from './MemberCard.svelte';
+	import { type MemberPath, equalsMemberPath } from '$lib/groups/MemberPath';
 
 	export let members: readonly MemberPath[];
 	export let folded: boolean | undefined = undefined;

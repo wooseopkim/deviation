@@ -1,6 +1,6 @@
+import type { Id } from './Id';
 import type groups from '.';
 import type { Group } from '.';
-import type { Id } from './Id';
 
 type GroupId<G extends Group = Group> = (typeof groups)[G]['id'];
 

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import bindDom from '$lib/store/dom';
 	import type { Writable } from 'svelte/store';
+	import bindDom from '$lib/store/dom';
 
 	export let edit:
 		| {

@@ -1,7 +1,7 @@
 <script lang="ts">
+	import type { Writable } from 'svelte/store';
 	import Button from '$lib/components/Button.svelte';
 	import type { SubUnit } from '$lib/groups/SubUnit';
-	import type { Writable } from 'svelte/store';
 
 	export let data: SubUnit;
 	export let into: Writable<SubUnit>;
