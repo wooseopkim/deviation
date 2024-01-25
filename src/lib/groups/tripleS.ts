@@ -15,8 +15,12 @@ const keys = [
 	'YeonJi',
 	'Nien',
 	'SoHyun',
-	'S15',
-	'S16',
+	'Xinyu',
+	'Mayu',
+	'Lynn',
+	'JooBin',
+	'JeongHaYeon',
+	'ParkShiOn',
 ] as const;
 
 const members = [
@@ -105,15 +109,39 @@ const members = [
 		color: '#1322B6',
 	} as const,
 	{
-		name: 'S15',
+		name: 'Xinyu',
 		id: 'o',
-		videoId: undefined,
+		videoId: '-YNkqDlBkMY',
 		color: undefined,
 	} as const,
 	{
-		name: 'S16',
+		name: 'Mayu',
 		id: 'p',
-		videoId: undefined,
+		videoId: 'tsuyF4z7Kns',
+		color: undefined,
+	} as const,
+	{
+		name: 'Lynn',
+		id: 'q',
+		videoId: 'S33GV97KXGk',
+		color: undefined,
+	} as const,
+	{
+		name: 'JooBin',
+		id: 'r',
+		videoId: 'Tig5Lt8N12Y',
+		color: undefined,
+	} as const,
+	{
+		name: 'JeongHaYeon',
+		id: 's',
+		videoId: 'bpVG7JttVVM',
+		color: undefined,
+	} as const,
+	{
+		name: 'ParkShiOn',
+		id: 't',
+		videoId: '_OTK4AZ0uHc',
 		color: undefined,
 	} as const,
 ] as const;

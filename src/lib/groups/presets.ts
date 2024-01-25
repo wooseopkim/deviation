@@ -30,7 +30,7 @@ const presets: SubUnit[] = [
 			toPath('tripleS', 'Kotone'),
 			toPath('tripleS', 'SooMin'),
 			toPath('tripleS', 'YeonJi'),
-			toPath('tripleS', 'S15'),
+			toPath('tripleS', 'Mayu'),
 		],
 	},
 	{
@@ -43,7 +43,26 @@ const presets: SubUnit[] = [
 			toPath('tripleS', 'SoHyun'),
 			toPath('tripleS', 'HyeRin'),
 			toPath('tripleS', 'Nien'),
-			toPath('tripleS', 'S16'),
+			toPath('tripleS', 'Xinyu'),
+		],
+	},
+	{
+		title: 'Aria',
+		members: [
+			toPath('tripleS', 'JiWoo'),
+			toPath('tripleS', 'ChaeYeon'),
+			toPath('tripleS', 'Kaede'),
+			toPath('tripleS', 'DaHyun'),
+			toPath('tripleS', 'Nien'),
+		],
+	},
+	{
+		title: 'NXT',
+		members: [
+			toPath('tripleS', 'Lynn'),
+			toPath('tripleS', 'JooBin'),
+			toPath('tripleS', 'JeongHaYeon'),
+			toPath('tripleS', 'ParkShiOn'),
 		],
 	},
 	{
