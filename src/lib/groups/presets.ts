@@ -61,8 +61,8 @@ const presets: SubUnit[] = [
 		members: [
 			toPath('tripleS', 'Lynn'),
 			toPath('tripleS', 'JooBin'),
-			toPath('tripleS', 'JeongHaYeon'),
-			toPath('tripleS', 'ParkShiOn'),
+			toPath('tripleS', 'HaYeon'),
+			toPath('tripleS', 'ShiOn'),
 		],
 	},
 	{

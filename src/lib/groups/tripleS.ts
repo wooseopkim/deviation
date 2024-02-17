@@ -19,8 +19,8 @@ const keys = [
 	'Mayu',
 	'Lynn',
 	'JooBin',
-	'JeongHaYeon',
-	'ParkShiOn',
+	'HaYeon',
+	'ShiOn',
 ] as const;
 
 const members = [
@@ -133,13 +133,13 @@ const members = [
 		color: undefined,
 	} as const,
 	{
-		name: 'JeongHaYeon',
+		name: 'HaYeon',
 		id: 's',
 		videoId: 'bpVG7JttVVM',
 		color: undefined,
 	} as const,
 	{
-		name: 'ParkShiOn',
+		name: 'ShiOn',
 		id: 't',
 		videoId: '_OTK4AZ0uHc',
 		color: undefined,
