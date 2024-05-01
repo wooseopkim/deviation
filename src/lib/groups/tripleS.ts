@@ -21,6 +21,10 @@ const keys = [
 	'JooBin',
 	'HaYeon',
 	'ShiOn',
+	'ChaeWon',
+	'Sullin',
+	'SeoAh',
+	'JiYeon',
 ] as const;
 
 const members = [
@@ -142,6 +146,30 @@ const members = [
 		name: 'ShiOn',
 		id: 't',
 		videoId: '_OTK4AZ0uHc',
+		color: undefined,
+	} as const,
+	{
+		name: 'ChaeWon',
+		id: 'u',
+		videoId: 'BqtKrYKOPd4',
+		color: undefined,
+	} as const,
+	{
+		name: 'Sullin',
+		id: 'v',
+		videoId: 'FhgCueX2QSc',
+		color: undefined,
+	} as const,
+	{
+		name: 'SeoAh',
+		id: 'w',
+		videoId: 'i6ZBVTYatSk',
+		color: undefined,
+	} as const,
+	{
+		name: 'JiYeon',
+		id: 'x',
+		videoId: 'e2i1kBtTspg',
 		color: undefined,
 	} as const,
 ] as const;
