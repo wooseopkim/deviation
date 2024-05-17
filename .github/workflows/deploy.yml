@@ -20,3 +20,5 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: netlify deploy --prod --functions=.netlify/server/_app/
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
