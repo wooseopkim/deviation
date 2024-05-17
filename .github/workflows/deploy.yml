@@ -1,0 +1,22 @@
+name: Deploy
+
+on:
+  push:
+    branches: 'main'
+
+jobs:
+  build_site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: npm
+      
+      - run: npm i -g netlify-cli
+      - run: netlify --telemetry-disable
+      - run: npm ci
+      - run: npm run build
+      - run: netfliy deploy --prod --functions=.netlify/server/_app/
