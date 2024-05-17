@@ -25,7 +25,12 @@ jobs:
       - run: npm run test:unit
 
       - run: npm run build
-      - run: netlify deploy --prod --functions=.netlify/server/_app/
+      - run: |
+          netlify deploy \
+            --prod \
+            --site "$NETLIFY_SITE_ID"
+            --auth "$NETLIFY_AUTH_TOKEN"
+            --functions=.netlify/server/_app/
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ env.NETLIFY_SITE_ID }}
