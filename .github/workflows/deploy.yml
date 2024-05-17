@@ -19,7 +19,9 @@ jobs:
       - run: netlify --telemetry-disable
       - run: npm ci
       - run: npm run build
+      - run: netlify link
+        env:
+          NETLIFY_SITE_ID: ${{ env.NETLIFY_SITE_ID }}
       - run: netlify deploy --prod --functions=.netlify/server/_app/
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ env.NETLIFY_SITE_ID }}
