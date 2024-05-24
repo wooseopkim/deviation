@@ -51,5 +51,8 @@
 			"npm run check",
 			"npm run format"
 		]
+	},
+	"volta": {
+		"node": "20.13.1"
 	}
 }
