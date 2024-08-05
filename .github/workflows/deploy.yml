@@ -25,7 +25,8 @@ jobs:
       - run: npm run test:unit
 
       - run: npm run build
-      - name: Deploy
+      - if: ${{ github.ref == 'refs/heads/main' }}
+        name: Deploy
         run: |
           netlify deploy \
             --prod \
