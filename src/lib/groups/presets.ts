@@ -1,5 +1,5 @@
-import { toPath } from '.';
 import type { SubUnit } from './SubUnit';
+import { toPath } from '.';
 
 const presets: SubUnit[] = [
 	{
