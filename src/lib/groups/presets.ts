@@ -1,5 +1,5 @@
-import type { SubUnit } from './SubUnit';
 import { toPath } from '.';
+import type { SubUnit } from './SubUnit';
 
 const presets: SubUnit[] = [
 	{
@@ -63,6 +63,45 @@ const presets: SubUnit[] = [
 			toPath('tripleS', 'JooBin'),
 			toPath('tripleS', 'HaYeon'),
 			toPath('tripleS', 'ShiOn'),
+		],
+	},
+	{
+		title: 'Glow',
+		members: [
+			toPath('tripleS', 'ChaeWon'),
+			toPath('tripleS', 'Sullin'),
+			toPath('tripleS', 'SeoAh'),
+			toPath('tripleS', 'JiYeon'),
+		],
+	},
+	{
+		title: 'Visionary Vision',
+		members: [
+			toPath('tripleS', 'YuBin'),
+			toPath('tripleS', 'Lynn'),
+			toPath('tripleS', 'HyeRin'),
+			toPath('tripleS', 'Kaede'),
+			toPath('tripleS', 'SoHyun'),
+			toPath('tripleS', 'YeonJi'),
+			toPath('tripleS', 'Kotone'),
+			toPath('tripleS', 'NaKyoung'),
+			toPath('tripleS', 'YooYeon'),
+			toPath('tripleS', 'Nien'),
+			toPath('tripleS', 'Xinyu'),
+			toPath('tripleS', 'JiYeon'),
+		],
+	},
+	{
+		title: '∞!',
+		members: [
+			toPath('tripleS', 'Mayu'),
+			toPath('tripleS', 'ShiOn'),
+			toPath('tripleS', 'YooYeon'),
+			toPath('tripleS', 'Kotone'),
+			toPath('tripleS', 'SooMin'),
+			toPath('tripleS', 'ChaeYeon'),
+			toPath('tripleS', 'JiWoo'),
+			toPath('tripleS', 'ChaeWon'),
 		],
 	},
 	{
